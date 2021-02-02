@@ -6,11 +6,23 @@
                 </el-tabs>
             <div @click='toArtical(i.id)' v-for='(i,index) in forums' :key='index' class='forum-one'>
                 <div class='forum-one-content'>
-                    <p><span>{{i.articalAuthor}}</span>|<span>{{i.articalDateMsg}}</span>|<span>{{i.articalDirection}}</span></p>
+                    <p>
+                        <span>{{i.articalAuthor}}</span>|
+                        <span>{{i.articalDateMsg}}</span>|
+                        <span>{{i.articalDirection}}</span>
+                    </p>
                     <p>{{i.forumTitle}}</p>
                     <el-row>
-                        <el-button :class='{isClick:i.articalLike.isChoose}' icon="el-icon-thumb" size="small" @click.stop='buttonClick(i.articalLike)'>{{i.articalLike.likeCount}}</el-button>
-                        <el-button icon='el-icon-chat-round' size="small">{{i.articalComment}}</el-button>
+                        <el-button 
+                            :class='{isClick:i.articalLike.isChoose}'
+                            icon="el-icon-thumb" size="small"
+                            @click.stop='buttonClick(i.articalLike)'
+                        >
+                            {{i.articalLike.likeCount}}
+                        </el-button>
+                        <el-button icon='el-icon-chat-round' size="small">
+                            {{i.articalComment}}
+                        </el-button>
                     </el-row>
                 </div>
                 <!-- <img :src='i.forumImg' alt=""> -->
@@ -24,8 +36,7 @@
 
 <script>
         //差filter,按钮点击颜色立刻消失,回复点击跳转,路由重定向和过滤
-    import {mapState} from 'vuex'
-    import 'element-ui'
+    import { mapState } from 'vuex'
     export default {
         data(){
             return {
@@ -48,10 +59,40 @@
             }
         },
         mounted(){
-            let date = new Date();
             // console.log(this.$store.state)
            this.forums.map((item)=>{
                 // console.log('item',item)
+                this.setHours(item);
+            })
+        },
+        computed:{
+            ...mapState(['forums'])
+        },
+        methods:{
+            buttonClick(item){
+                if(item.isChoose){
+                    console.log('已选中')
+                    item.likeCount -= 1;
+                    item.isChoose = !item.isChoose;
+                }else{
+                    console.log('未选中')
+                    item.likeCount += 1;
+                    item.isChoose = !item.isChoose;
+                }
+            },
+            handleClick(){
+                console.log('clicks')
+            },
+            toArtical(id){
+                console.log(id)
+                this.$router.push('/artical'+id)
+            },
+            toAddConversation(){
+                this.$router.push('/addArtical')
+            },
+            setHours(item){
+                let date = new Date();
+
                 if((date.getHours()-item.articalDate.getHours())<1){
                     item.articalDateMsg = '刚刚'
                     // console.log('刚刚')
@@ -81,33 +122,6 @@
                     item.articalDateMsg = date.getFullYear()-item.articalDate.getFullYear();
                     console.log('几年内')
                 }
-                // console.log(item.articalDate.getHours())
-            })
-        },
-        computed:{
-            ...mapState(['forums'])
-        },
-        methods:{
-            buttonClick(item){
-                if(item.isChoose){
-                    console.log('已选中')
-                    item.likeCount -= 1;
-                    item.isChoose = !item.isChoose;
-                }else{
-                    console.log('未选中')
-                    item.likeCount += 1;
-                    item.isChoose = !item.isChoose;
-                }
-            },
-            handleClick(){
-                console.log('clicks')
-            },
-            toArtical(id){
-                console.log(id)
-                this.$router.push('/artical'+id)
-            },
-            toAddConversation(){
-                this.$router.push('/addArtical')
             }
         }
     }
