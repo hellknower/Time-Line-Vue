@@ -7,6 +7,7 @@ import Artical from '../views/Forum/Artical.vue'
 
 import Conversation from '../views/Conversation'
 import TimeLine from '../views/TimeLine'
+import Login from '../views/Login'
 
 
 Vue.use(VueRouter)
@@ -14,8 +15,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'View',
-    component: Forum
+    name: 'Login',
+    component: Login,
   },
   {
     path: '/forum',
