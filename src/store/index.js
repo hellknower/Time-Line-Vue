@@ -1,29 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import user from './modules/user'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     forums:[
         {
-            articalAuthor:'a',  //作者
+            articalAuthor:'a',      //作者
             articalLike:{
-              likeCount:12,//点赞数
-              isChoose:true       //是否点击
+              likeCount:12,         //点赞数
+              isChoose:true         //是否点击
             },
-            articalComment:0,   //被评论数
+            articalComment:0,       //被评论数
             articalCommentContent:{ //评论内容
 
             },
             articalDate:new Date(), //发布时间
             articalDateMsg:'',      //从发布到现在的时间
-            articalDirection:'前端',  //文章方向
-            id:1,                    //作者id
+            articalDirection:'前端',//文章方向
+            id:1,                   //作者id
             forumImg:require("../assets/bg.jpg"),//文章图片
-            forumTitle:'aaaa',    //文章标题
-            forumContent:'',
-                                  //文章内容
+            forumTitle:'aaaa',      //文章标题
+            forumContent:'',        //文章内容
+                                  
         },
         {
           articalAuthor:'b',
@@ -74,17 +76,15 @@ export default new Vuex.Store({
   },
   mutations: {
     addartical(state,newArtical){
-      // console.log(newArtical)
-      state.forums.push(newArtical)
-      // console.log('mutations',newArtical)
+      state.forums.push(newArtical);
     }
   },
   actions: {
     addArtical(item,artical){
-      item.commit('addartical',artical)
-      // console.log('action',artical)
+      item.commit('addartical',artical);
     }
   },
   modules: {
+    user
   }
 })
