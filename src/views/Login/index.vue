@@ -1,7 +1,15 @@
 <template>
-    <div class='Login'>
-        用户名<el-input v-model="input" placeholder="请输入内容"></el-input>
-        <el-input v-model="input" placeholder="请输入内容"></el-input>
+    <div id="Login">
+        <div class="login-input-position">
+            <div class="login-userName">
+                <span>用户名:</span>
+                <el-input v-model="userName" placeholder="请输入内容"/>
+            </div>
+            <div class="login-passWord">
+                <span>密码:</span>
+                <el-input v-model="passWord" placeholder="请输入内容"/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -9,7 +17,8 @@
     export default {
         data(){
             return {
-
+                userName:'',
+                passWord:''
             }
         },
         mounted(){
@@ -21,5 +30,7 @@
     }
 </script>
 
-<style>
+<style lang="stylus" rel="stylesheet/stylus">
+    #Login
+        border:1px solid red
 </style>
