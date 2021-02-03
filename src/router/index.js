@@ -31,11 +31,15 @@ const routes = [
     component: Main,
     children:[
       {
+        path: '/main/',
+        name: 'forum',
+        component: Forum,
+      },
+      {
         path: '/main/forum',
         name: 'forum',
         component: Forum,
       },
-
     ]
   },
   {
