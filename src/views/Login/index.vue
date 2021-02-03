@@ -31,6 +31,4 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    #Login
-        border:1px solid red
 </style>

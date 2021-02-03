@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import View from '../views'
+
+import Login from '../views/Login'
+import Main from '../views/Main'
+
 import Forum from '../views/Forum'
 import AddArtical from '../views/Forum/AddArtical.vue'
 import Artical from '../views/Forum/Artical.vue'
 
 import Conversation from '../views/Conversation'
 import TimeLine from '../views/TimeLine'
-import Login from '../views/Login'
 
 
 Vue.use(VueRouter)
@@ -15,13 +17,26 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Login',
+    name: 'login',
     component: Login,
   },
   {
-    path: '/forum',
-    name: 'forum',
-    component: Forum,
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/main',
+    name: 'main',
+    component: Main,
+    children:[
+      {
+        path: '/main/forum',
+        name: 'forum',
+        component: Forum,
+      },
+
+    ]
   },
   {
     path:'/addArtical',
