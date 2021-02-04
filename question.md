@@ -11,3 +11,11 @@
   - stylus-loader版本不能过高,必须配合当前的webpack版本以及stylus版本,项目中使用的是3.0.2
 - 3.暂时未遇到问题
   - 网络上推荐使用webpack.base.config.js进行,这里刚开始使用时并没有因为没有配置而产生错误
+
+## vue框架中监听enter事件
+- 在cli中监听enter之类的按键事件需要使用.native
+  - 问题指向 - login界面的对input的按键监听事件
+
+## 提出问题
+- vue中是使用函数中新建的参数还是使用state中创建的属性?那种相对来说更优?
+  - 问题指向 - login界面中的isRight属性,是在函数中创建还是在state中创建?
