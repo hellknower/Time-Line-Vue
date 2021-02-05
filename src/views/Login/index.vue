@@ -21,57 +21,6 @@
         computed:{
         },
         methods:{
-            checkUsername(event){
-                const username = typeof event === 'object'?event.target.value:event;
-                if(username.length < 1){
-                    this.isUsernameRight = false;
-                    this.usernameErrorMsg = '用户名不能为空';
-                    return;
-                }else if(username.length > 18){
-                    this.isUsernameRight = false;
-                    this.usernameErrorMsg = '用户名为数不能大于18位';
-                    return;
-                }
-                const rex = new RegExp(/^[a-z,A-Z,0-9,_,\u4e00-\u9fa5]{1,18}$/);
-                this.isUsernameRight = rex.test(username);
-                if(!this.isUsernameRight){
-                    this.isUsernameRight = false;
-                    this.usernameErrorMsg = '账号格式不正确,请输入正确的账号';
-                    return;
-                }
-            },
-            checkPassword(event){
-                const password = typeof event === 'object'?event.target.value:event;
-                if(password.length < 6){
-                    this.isPasswordRight = false;
-                    this.passwordErrorMsg = '密码为数不能小于6位';
-                    return;
-                }else if(password.length > 12){
-                    this.isPasswordRight = false;
-                    this.passwordErrorMsg = '密码为数不能大于12位';
-                    return;
-                }
-                const rex = new RegExp(/^[a-z,A-Z,0-9,_]{1,12}$/);
-                this.isPasswordRight = rex.test(password);
-                if(!this.isPasswordRight){
-                    this.isPasswordRight = false;
-                    this.passwordErrorMsg = '密码格式不正确,请输入正确的密码';
-                    return;
-                }
-            },
-            forget(){
-                this.$router.push('login/forget');
-            },
-            regist(){
-                this.$router.push('login/regist');
-            },
-            login(){
-                this.checkUsername(this.username);
-                this.checkPassword(this.password);
-                if(this.isPasswordRight && this.isUsernameRight){ 
-                    this.$router.push('main');
-                }
-            }
         }
     }
 </script>

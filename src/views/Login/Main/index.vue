@@ -9,7 +9,7 @@
                     clearable 
                     placeholder="请输入用户名"
                     @blur="checkUsername"
-                    @keydown.enter.native="login"/>
+                    @keydown.enter.native="pressLogin"/>
             </div>
             <div class="error-message">
                 <span v-show="!isUsernameRight">{{usernameErrorMsg}}</span>
@@ -23,7 +23,7 @@
                     placeholder="请输入密码" 
                     show-password
                     @blur="checkPassword"
-                    @keydown.enter.native="login"/>
+                    @keydown.enter.native="pressLogin"/>
             </div>
             <div class="error-message">
                 <span v-show="!isPasswordRight">{{passwordErrorMsg}}</span>
@@ -33,13 +33,15 @@
                 <el-button type="text" @click="regist">注册账号</el-button>
             </div>
             <div class="login-button">
-                <el-button type="primary" @click="login">登陆</el-button>
+                <el-button type="primary" @click="pressLogin">登陆</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { login } from '../../../api/user.js';
+
     export default {
         data(){
             return {
@@ -100,11 +102,19 @@
             regist(){
                 this.$router.push('login/regist');
             },
-            login(){
+            pressLogin(){
                 this.checkUsername(this.username);
                 this.checkPassword(this.password);
                 if(this.isPasswordRight && this.isUsernameRight){ 
-                    this.$router.push('main');
+                    let a = {
+                        a:10,
+                        b:100
+                    }
+                    login(a).then(res=>{
+                        console.log(res)
+                        // if(){}
+                        // this.$router.push('main');
+                    }).catch()
                 }
             }
         }
