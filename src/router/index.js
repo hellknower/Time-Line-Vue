@@ -2,6 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Login from '../views/Login'
+  import Forget from '../views/Login/Forget'
+  import Regist from '../views/Login/Regist'
+  import LoginMain from '../views/Login/Main'
+  
 import Main from '../views/Main'
 
 import Forum from '../views/Forum'
@@ -16,14 +20,30 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'login',
-    component: Login,
+    path:'/',
+    redirect:'/login',
   },
   {
     path: '/login',
     name: 'login',
     component: Login,
+    children:[
+      {
+        path: '/login/',
+        name: 'main',
+        component: LoginMain,
+      },
+      {
+        path: '/login/forget',
+        name: 'forget',
+        component: Forget,
+      },
+      {
+        path: '/login/regist',
+        name: 'regist',
+        component: Regist,
+      },
+    ]
   },
   {
     path: '/main',

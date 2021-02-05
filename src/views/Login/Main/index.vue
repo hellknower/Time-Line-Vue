@@ -1,6 +1,41 @@
 <template>
-    <div id="Login">
-        <router-view></router-view>
+    <div class="login-input-position">
+        <div class="login-input--center-position">
+            <div class="login-input login-userName">
+                <span>用户名:</span>
+                <el-input 
+                    v-model="username"
+                    autocomplete
+                    clearable 
+                    placeholder="请输入用户名"
+                    @blur="checkUsername"
+                    @keydown.enter.native="login"/>
+            </div>
+            <div class="error-message">
+                <span v-show="!isUsernameRight">{{usernameErrorMsg}}</span>
+            </div>  
+            <div class="login-input login-password">
+                <span>密码:</span>
+                <el-input 
+                    v-model="password" 
+                    autocomplete 
+                    clearable 
+                    placeholder="请输入密码" 
+                    show-password
+                    @blur="checkPassword"
+                    @keydown.enter.native="login"/>
+            </div>
+            <div class="error-message">
+                <span v-show="!isPasswordRight">{{passwordErrorMsg}}</span>
+            </div>                
+            <div class="create-or-forget-buttonArray">
+                <el-button type="text" @click="forget" class="forget-password">忘记密码</el-button>
+                <el-button type="text" @click="regist">注册账号</el-button>
+            </div>
+            <div class="login-button">
+                <el-button type="primary" @click="login">登陆</el-button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -77,44 +112,4 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-#Login
-    height:100%
-    .login-input-position
-        width:500px
-        height:350px
-        border-radius:5px
-        margin:0 auto
-        box-shadow:5px 5px 5px 5px gray
-        text-align:center
-        position:relative
-        top:50%
-        transform:translateY(-50%)
-        display:flex
-        flex-direction:column   
-        justify-content:center
-        .longin-back-icon
-            width:20px
-            position:absolute
-            top:20px
-            right:20px
-        .login-input
-            display:flex
-            justify-content:center
-            span
-                width:80px
-                margin-right:8px
-                line-height:40px
-                text-align:right
-            .el-input
-                width:240px
-        .error-message
-            color:#f24531
-            line-height:20px
-            font-size:14px
-            height:24px
-        .create-or-forget-buttonArray
-            margin-bottom:16px
-            .el-button 
-                padding-top:8px
-                padding-bottom:8px
 </style>
