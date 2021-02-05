@@ -105,16 +105,19 @@ import { login } from '../../../api/user.js';
             pressLogin(){
                 this.checkUsername(this.username);
                 this.checkPassword(this.password);
-                if(this.isPasswordRight && this.isUsernameRight){ 
-                    let a = {
-                        a:10,
-                        b:100
-                    }
-                    login(a).then(res=>{
-                        console.log(res)
-                        // if(){}
-                        // this.$router.push('main');
-                    }).catch()
+                if(this.isPasswordRight && this.isUsernameRight){
+                    const username = this.username;
+                    const password = this.password;
+                    login({ username,password }).then((resolve) => {
+                        const {success} = resolve;
+                        if(success){
+                            this.$router.push('main');
+                        }else{
+                            console.log('出错');
+                        }
+                    }).catch(err => {
+                        console.log('错误为:'+err);
+                    })
                 }
             }
         }

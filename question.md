@@ -16,6 +16,31 @@
 - 在cli中监听enter之类的按键事件需要使用.native
   - 问题指向 - login界面的对input的按键监听事件
 
+## 前端发送数据后端接受不到
+- 使用body-parse
+```
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+```
+
+## 跨域
+- 此项目中使用的是配置vue.config.js的方法
+```
+  devServer: {
+    proxy: {
+        
+        '/api': {
+            target: 'http://localhost:8088',
+            ws: true,
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api': ''
+            }
+        },
+    }
+  }
+```
+
 ## 提出问题
 - vue中是使用函数中新建的参数还是使用state中创建的属性?那种相对来说更优?
   - 问题指向 - login界面中的isRight属性,是在函数中创建还是在state中创建?

@@ -8,9 +8,12 @@ app.use(bodyParser.json());
 
 
 app.post('/user/login',(req,res)=>{
-    console.log(req.body);
+    const { username,password } = req.body;
+    console.log(username,password);
     
-    res.json({a:10});
+    res.json({
+        success:true,
+    });
 });
 
 app.listen(8088,(err)=>{
