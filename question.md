@@ -40,6 +40,8 @@ app.use(bodyParser.json());
     }
   }
 ```
+## Mongoose使用
+- mongoose.connect返回一个promise对象
 
 ## 提出问题
 - vue中是使用函数中新建的参数还是使用state中创建的属性?那种相对来说更优?
