@@ -131,10 +131,12 @@
     .forumTop{
         background:rgba(178,186,194,.15);
         padding-top:20px;
+        height:100%;
     }
     .forum-all{
         background:white;
         width:748px;
+        height:100%;
         margin:0 auto;
     }
     .el-tabs__header {
