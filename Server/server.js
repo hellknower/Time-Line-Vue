@@ -1,5 +1,8 @@
 let express = require('express');
-let bodyParser = require('body-parser')
+let bodyParser = require('body-parser');
+let sha1 = require('sha1');
+
+let userModel = require('./Model/userModel');
 
 const Connection = require('./Connect');
 
@@ -9,6 +12,38 @@ app.use(bodyParser.json());
 
 Connection.then(()=>{
     console.log('数据库连接成功');
+    //用户路由 --- 注册
+    app.post('/user/register',async(req,res)=>{
+        const { username,password } = req.body;
+        const userDate = Date.now();
+        const userId = sha1(+username + userDate);
+
+        try{
+            let isExist = await userModel.findOne({userName:username});
+
+            if(!isExist){
+                await userModel.create({userId,userName:username,userPassword:password,UserCreateDate:userDate});
+                
+                res.json({
+                    success:true,
+                    message:'用户创建成功'
+                });
+            }else{
+                res.json({
+                    success:false,
+                    message:'用户名已存在，请重新输入'
+                });
+            }
+        }catch(err){   
+            console.log(err);
+            res.json({
+                success:false,
+                message:'网络异常，请稍后。。。'
+            });
+        }
+    });
+
+    //用户路由 --- 登录
     app.post('/user/login',(req,res)=>{
         const { username,password } = req.body;
         console.log(username,password);

@@ -11,7 +11,7 @@
                     clearable 
                     placeholder="请输入用户名"
                     @blur="checkUsername"
-                    @keydown.enter.native="login"/>
+                    @keydown.enter.native="regist"/>
             </div>
             <div class="error-message">
                 <span v-show="!isUsernameRight">{{usernameErrorMsg}}</span>
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { register } from '../../../api/user.js';
+
     export default {
         data(){
             return {
@@ -112,7 +114,7 @@
                     this.RepasswordErrorMsg = '重复密码不能为空';
                     return;
                 }
-                // const rePassword = typeof event === 'object'?event.target.value:event;
+                
                 if(this.rePassword !== this.password){
                     this.isRePasswordRight = false;
                     this.RepasswordErrorMsg = '两次密码不同,请重新输入';
@@ -130,11 +132,28 @@
                 this.checkPassword(this.password);
                 this.checkRePassword(this.rePassword);
                 if(this.isPasswordRight && this.isUsernameRight){ 
-                    this.$message({
-                        type:'success',
-                        message:'注册成功'
+                    const username = this.username;
+                    const password = this.password;
+                    
+                    register({ username,password }).then((resolve) => {
+                        const {success,message} = resolve;
+                        
+                        if(success){
+                            this.$message({
+                                type:'success',
+                                message:message
+                            });
+
+                            this.$router.push('/login');
+                        }else{
+                            this.$message({
+                                type:'error',
+                                message:message
+                            });
+                        }
+                    }).catch(err => {
+                        console.log('错误为:'+err);
                     })
-                    this.$router.push('/login');
                 }
             }
         }
