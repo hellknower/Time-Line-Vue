@@ -44,13 +44,32 @@ Connection.then(()=>{
     });
 
     //用户路由 --- 登录
-    app.post('/user/login',(req,res)=>{
+    app.post('/user/login',async(req,res)=>{
         const { username,password } = req.body;
-        console.log(username,password);
         
-        res.json({
-            success:true,
-        });
+        
+        try{
+            let isExist = await userModel.findOne({userName:username,userPassword:password});
+
+            if(!isExist){
+                
+                res.json({
+                    success:false,
+                    message:'用户不存在，请注册账号'
+                });
+            }else{
+                res.json({
+                    success:true,
+                    message:'登陆成功'
+                });
+            }
+        }catch(err){   
+            console.log(err);
+            res.json({
+                success:false,
+                message:'网络异常，请稍后。。。'
+            });
+        }
     });
 }).catch(err=>{
     console.log('数据库连接失败',err);

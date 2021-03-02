@@ -109,11 +109,18 @@ import { login } from '../../../api/user.js';
                     const username = this.username;
                     const password = this.password;
                     login({ username,password }).then((resolve) => {
-                        const {success} = resolve;
+                        const {success,message} = resolve;
                         if(success){
+                            this.$message({
+                                type:'success',
+                                message:message
+                            })
                             this.$router.push('main');
                         }else{
-                            console.log('出错');
+                            this.$message({
+                                type:'error',
+                                message:message
+                            })
                         }
                     }).catch(err => {
                         console.log('错误为:'+err);
