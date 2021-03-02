@@ -49,18 +49,25 @@ Connection.then(()=>{
         
         
         try{
-            let isExist = await userModel.findOne({userName:username,userPassword:password});
-
-            if(!isExist){
+            let isUserExist = await userModel.findOne({userName:username});
+            let isPasswordExist = await userModel.findOne({userName:username,userPassword:password});
+            if(isUserExist){
+                if(isPasswordExist){
+                    res.json({
+                        success:true,
+                        message:'登陆成功'
+                    });
+                }else{
+                    res.json({
+                        success:false,
+                        message:'密码错误，请重新输入'
+                    });
+                }
                 
+            }else{
                 res.json({
                     success:false,
                     message:'用户不存在，请注册账号'
-                });
-            }else{
-                res.json({
-                    success:true,
-                    message:'登陆成功'
                 });
             }
         }catch(err){   
