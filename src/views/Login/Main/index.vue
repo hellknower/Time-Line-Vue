@@ -109,12 +109,15 @@ import { login } from '../../../api/user.js';
                     const username = this.username;
                     const password = this.password;
                     login({ username,password }).then((resolve) => {
-                        const {success,message} = resolve;
+                        const {success,message,userId} = resolve;
                         if(success){
                             this.$message({
                                 type:'success',
                                 message:message
-                            })
+                            });
+
+                            sessionStorage.setItem('userId',userId);
+                            
                             this.$router.push('main');
                         }else{
                             this.$message({

@@ -47,15 +47,17 @@ Connection.then(()=>{
     app.post('/user/login',async(req,res)=>{
         const { username,password } = req.body;
         
-        
         try{
             let isUserExist = await userModel.findOne({userName:username});
             let isPasswordExist = await userModel.findOne({userName:username,userPassword:password});
             if(isUserExist){
                 if(isPasswordExist){
+                    let {userId} = isUserExist;
+                    
                     res.json({
                         success:true,
-                        message:'登陆成功'
+                        message:'登陆成功',
+                        userId:userId
                     });
                 }else{
                     res.json({

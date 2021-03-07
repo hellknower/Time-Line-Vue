@@ -25,23 +25,19 @@
     }
 </script>
 
-<style>
-    .head{
+<style lang="stylus">
+    .head
         height:60px;
         display:flex;
         justify-content: center;
         align-items: center;
-    }
-    .router-link-active {
-        font-size:18px;
-        color:#71777c;
-        text-decoration: none;
-        margin-right:60px;
-    }
-    .router-link-active:last-child {
-        margin-right:0px;
-    }
-    .router-link-active:hover{
-        color:#007fff;
-    }
+        .router-link-active
+            font-size:18px;
+            color:#71777c;
+            text-decoration: none;
+            margin-right:60px;
+        .router-link-active:last-child
+            margin-right:0px;
+        .router-link-active:hover
+            color:#007fff;
 </style>

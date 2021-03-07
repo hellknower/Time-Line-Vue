@@ -74,9 +74,8 @@
     }
 </script>
 
-<style>
-    .addArtical{
+<style lang="stylus">
+    .addArtical
         margin:0 auto;
         width:1000px;
-    }
 </style>

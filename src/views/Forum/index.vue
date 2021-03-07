@@ -127,75 +127,53 @@
     }
 </script>
 
-<style>
-    .forumTop{
+<style lang="stylus">
+    .forumTop
         background:rgba(178,186,194,.15);
         padding-top:20px;
         height:100%;
-    }
-    .forum-all{
-        background:white;
-        width:748px;
-        height:100%;
-        margin:0 auto;
-    }
-    .el-tabs__header {
-        margin-bottom:0!important;
-    }
-    .el-tabs__nav-wrap::after{
-        background-color:rgb(255, 255, 255)!important;
-    }
-    .forum-all .forum-one{
-        padding:18px 24px;
-        border-top:1px solid rgba(178,186,194,.15);
-        width:700px;
-        height:120px;
-        display:flex;
-        text-align: left;
-    }
-    .forum-all .forum-one:nth-child(2){
-        border-top:0px;
-    }
-    .forum-one-content p{
-        color:#b2bac2;
-        font-size: 15px;
-        line-height: 0;
-    }
-    .forum-one-content p span{
-        margin-left:8px;
-        margin-right:8px;
-    }
-    .forum-one-content p span:first-child{   
-        margin-left:0px;
-    }
-    .forum-one-content p:nth-child(2){
-        color:rgb(46,49,53);
-        font-size: 28px;
-    }
-    .el-button--default{
-        margin-left:0!important;
-    }
-    .isClick{
-        color: #409EFF!important;
-        border-color: #c6e2ff!important;
-        background-color: #ecf5ff!important;  
-    }
-    
-    .forum-add{
-        position:fixed;
-        top:90%;
-        right:3%;
-        cursor: pointer;
-    }
-    .forum-add img{
-        height:50px;
-    }
-    .forum-one img{
-        border:1px solid red;
-        float:right;
-        right:0;
-        /* position:absolute; */
-        /* opacity: 0; */
-        /* filter:blur(2px)  */
-    }
+        .forum-all
+            background:white;
+            width:748px;
+            height:100%;
+            margin:0 auto;
+            .forum-one
+                padding:18px 24px;
+                border-top:1px solid rgba(178,186,194,.15);
+                width:700px;
+                height:120px;
+                display:flex;
+                text-align: left;
+                .forum-one-content
+                    p
+                        color:#b2bac2;
+                        font-size: 15px;
+                        line-height: 0;
+                        span
+                            margin-left:8px;
+                            margin-right:8px;
+                        span:first-child 
+                            margin-left:0px;
+                    p:nth-child(2)
+                        color:rgb(46,49,53);
+                        font-size: 28px;          
+                    .isClick
+                        color: #409EFF!important;
+                        border-color: #c6e2ff!important;
+                        background-color: #ecf5ff!important;          
+            .forum-one:nth-child(2)
+                border-top:0px;
+            .forum-add
+                position:fixed;
+                top:90%;
+                right:3%;
+                cursor: pointer;
+                img
+                    height:50px;
+            .el-tabs__header
+                margin-bottom:0!important;
+            .el-tabs__nav-wrap::after
+                background-color:rgb(255, 255, 255)!important;
+            .el-button--default
+                margin-left:0!important;
 </style>
