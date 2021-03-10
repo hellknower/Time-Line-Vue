@@ -80,6 +80,39 @@ Connection.then(()=>{
             });
         }
     });
+
+    //登录 --- 忘记密码
+    app.post('/user/forget',async(req,res)=>{
+        const {username,oldPassword,password} = req.body;
+
+        try{
+            let isUserExist = await userModel.findOne({userName:username,userPassword:oldPassword});
+
+            
+            if(isUserExist){
+                await userModel.updateOne({userPassword:oldPassword},{userPassword:password});
+                res.json({
+                    success:true,
+                    message:'密码更换成功'
+                });
+                
+            }else{
+                res.json({
+                    success:false,
+                    message:'密码错误，请重新输入'
+                });
+            }
+
+
+        }catch(err){
+            console.log(err);
+            res.json({
+                success:false,
+                message:'网络异常，请稍后。。。'
+            });
+        }
+
+    });
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });

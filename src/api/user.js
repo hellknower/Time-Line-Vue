@@ -17,3 +17,12 @@ export function register(data){
         data
     });
 }
+
+//用户 --- 忘记密码
+export function forgotten(data){
+    return request({
+        url:'/user/forget',
+        method:'post',
+        data
+    });
+}
