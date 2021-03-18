@@ -17,7 +17,7 @@ let userSchema = new Schema({
         type:String,
         required:true
     },
-    UserCreateDate:{
+    userCreateDate:{
         type:Date,
         required:true
     }

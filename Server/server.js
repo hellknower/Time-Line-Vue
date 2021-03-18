@@ -22,7 +22,7 @@ Connection.then(()=>{
             let isExist = await userModel.findOne({userName:username});
 
             if(!isExist){
-                await userModel.create({userId,userName:username,userPassword:password,UserCreateDate:userDate});
+                await userModel.create({userId,userName:username,userPassword:password,userCreateDate:userDate});
                 
                 res.json({
                     success:true,
