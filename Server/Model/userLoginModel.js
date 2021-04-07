@@ -21,8 +21,8 @@ let userSchema = new Schema({
         type:Date,
         required:true
     }
-    });
+});
 
-    let userModel = mongoose.model('User',userSchema);//创建模型对象
+let userModel = mongoose.model('UserLogin',userSchema);//创建模型对象
 
-    module.exports = userModel;
+module.exports = userModel;

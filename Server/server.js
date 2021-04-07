@@ -2,7 +2,7 @@ let express = require('express');
 let bodyParser = require('body-parser');
 let sha1 = require('sha1');
 
-let userModel = require('./Model/userModel');
+let userModel = require('./Model/userLoginModel');
 
 const Connection = require('./Connect');
 
