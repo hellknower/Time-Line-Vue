@@ -1,81 +1,88 @@
 <template>
-    <div>
-        <div class='addArtical'>
-            <!-- {{id}} -->
-            <el-input v-model='articalAuthor' placeholder="作者"></el-input>
-            <el-input v-model='forumTitle' placeholder="标题"></el-input>
-            <el-input v-model='forumContent' type='textarea'></el-input>
-            <el-select v-model="articalDirection" placeholder="请选择">
-              <el-option
-                v-for="item in options"
+    <div class="add-article">
+
+        <el-input
+            class="add-article-title"
+            v-model="title"
+            placrholder="请在此输入标题"
+        />
+        <el-select v-model="articleKind">
+            <el-option
+                v-for="item in articleKinds"
                 :key="item.value"
+                :value="item.value"
                 :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <el-row>
-                <el-button @click='addArtical'>发布</el-button>
-            </el-row>
-        </div>
+            ></el-option>
+        </el-select>
+
+        <el-button 
+            @click="open"
+        >
+            发布
+        </el-button>
+        <el-input
+            class="add-article-input" 
+            type="textarea"
+            resize="none"
+            v-model="readmeData"
+        />
+        <div class="add-article-content" v-html="compileMarkDown(readmeData)"></div>
     </div>
 </template>
 
 <script>
-    export default{
-        data(){
-            return{
-                articalAuthor:'testDemo',
-                articalDate:'',
-                articalDirection:'',
-                id:'',
-                forumTitle:'',
-                forumContent:'',
-                options:[{
-                        label:'前端',
-                        value:'前端',
-                    },
-                    {
-                        label:'后端',
-                        value:'后端',
-                    },
-                    {
-                        label:'移动端',
-                        value:'移动端',
-                    },
-                    {
-                        label:'测试',
-                        value:'测试',
-                    }]
-            }
-        },
-        methods:{
-            addArtical(){
-                let articalJson = new Object()
-                articalJson.articalAuthor = this.articalAuthor;
-                articalJson.articalDate = new Date();
-                
-                articalJson.articalDateMsg = '';
-                articalJson.articalDirection = this.articalDirection;
-                articalJson.forumTitle = this.forumTitle;
-                articalJson.forumContent = this.forumContent;
-                
-                articalJson.articalLike={
-                    likeCount:0,
-                    isChoose:false
-                };
-                articalJson.articalComment = 0;
-                // articalJson.articalAuthor = this.articalAuthor;
-                // console.log(articalJson)
-                // this.$store.commit('addartical',articalJson)
-                this.$store.dispatch('addArtical',articalJson)
-                this.$router.replace('/forum')
-            }
+const showdown = require('showdown');
+const converter = new showdown.Converter();
+
+export default{
+    data(){
+        return{
+            title:'',
+            readmeData:'',
+            articleKinds:[],
+            articleKind:''
         }
+    },
+    mounted(){
+        this.articleKinds = [
+            {
+                value:1,
+                label:'前端'
+            },
+            {
+                value:2,
+                label:'后台'
+            },
+            {
+                value:3,
+                label:'数据库'
+            },
+            {
+                value:4,
+                label:'算法'
+            },
+        ];
+    },
+    methods:{
+        compileMarkDown(value){
+            return converter.makeHtml(value);
+        },
+        open(){
+            console.log('submit')
+        },
     }
+}
 </script>
 
 <style lang="stylus">
-    .addArtical
+    .add-article
         margin:0 auto;
-        width:1000px;
+        .add-article-title
+
+        .add-article-input
+            width:50%
+            float:left
+        .add-article-content
+            width:50%
+            float:left
 </style>
