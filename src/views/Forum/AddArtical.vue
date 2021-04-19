@@ -7,7 +7,7 @@
                 placeholder="请在此输入标题..."
             />
             <div class="add-article-head-rightPart">
-                <el-select v-model="articleKind">
+                <el-select v-model="selectedKind">
                     <el-option
                         v-for="item in articleKinds"
                         :key="item.value"
@@ -49,7 +49,7 @@ export default{
             title:'',
             readmeData:'',
             articleKinds:[],
-            articleKind:''
+            selectedKind:''
         }
     },
     mounted(){
