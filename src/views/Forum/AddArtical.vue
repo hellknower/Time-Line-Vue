@@ -1,32 +1,41 @@
 <template>
     <div class="add-article">
+        <div class="add-article-head">
+            <el-input
+                class="add-article-head-title"
+                v-model="title"
+                placeholder="请在此输入标题..."
+            />
+            <div class="add-article-head-rightPart">
+                <el-select v-model="articleKind">
+                    <el-option
+                        v-for="item in articleKinds"
+                        :key="item.value"
+                        :value="item.value"
+                        :label="item.label"
+                    ></el-option>
+                </el-select>
 
-        <el-input
-            class="add-article-title"
-            v-model="title"
-            placrholder="请在此输入标题"
-        />
-        <el-select v-model="articleKind">
-            <el-option
-                v-for="item in articleKinds"
-                :key="item.value"
-                :value="item.value"
-                :label="item.label"
-            ></el-option>
-        </el-select>
+                <el-button 
+                    class="add-article-head-publish"
+                    @click="open"
+                    type="primary"
+                >
+                    发布
+                </el-button>
+            </div>
+        </div>
+        <div class="add-article-body">
+            <el-input
+                class="add-article-content-input" 
+                type="textarea"
+                resize="none"
+                v-model="readmeData"
+                show-word-limit=true
+            />
+            <div class="add-article-content" v-html="compileMarkDown(readmeData)"></div>
+        </div>
 
-        <el-button 
-            @click="open"
-        >
-            发布
-        </el-button>
-        <el-input
-            class="add-article-input" 
-            type="textarea"
-            resize="none"
-            v-model="readmeData"
-        />
-        <div class="add-article-content" v-html="compileMarkDown(readmeData)"></div>
     </div>
 </template>
 
@@ -76,13 +85,46 @@ export default{
 
 <style lang="stylus">
     .add-article
+        height:100%
         margin:0 auto;
-        .add-article-title
+        .add-article-head
+            box-sizing:border-box
+            padding:8px 16px
+            height:63px
+            display:flex
+            justify-content:space-between
+            align-items:center
+            .add-article-head-title
+                width:100%
+                height:100%
+                input
+                    border:1px solid #fff
+                    height:100%
+                    font-size:22px
+            .add-article-head-rightPart
+                display:flex
+                align-items:center
+                .add-article-head-publish
+                    box-sizing:content-box
+                    height:26px
+                    width:28px
+                    padding:2px 16px
+                    margin-left 8px
 
-        .add-article-input
-            width:50%
-            float:left
-        .add-article-content
-            width:50%
-            float:left
+        .add-article-body
+            height:calc(100% - 64px)
+            border-top:1px solid #e1e4e8
+            display:flex
+            .add-article-content-input
+                width:50%
+                .el-textarea__inner
+                    background-color:#c9cdd42b
+                    border:0
+                    border-radius:0
+                    border-right:1px solid #DCDFE6
+                    height:100%
+            .add-article-content
+                width:50%
+                height:100%
+                overflow:auto
 </style>
