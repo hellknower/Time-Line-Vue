@@ -3,6 +3,8 @@ let bodyParser = require('body-parser');
 let sha1 = require('sha1');
 
 let userModel = require('./Model/userLoginModel');
+let articleModel = require('./Model/articleModel');
+let userOwnArticleModel = require('./Model/userOwnArticleModel');
 
 const Connection = require('./Connect');
 
@@ -23,7 +25,7 @@ Connection.then(()=>{
 
             if(!isExist){
                 await userModel.create({userId,userName:username,userPassword:password,userCreateDate:userDate});
-                
+
                 res.json({
                     success:true,
                     message:'用户创建成功'
@@ -113,6 +115,42 @@ Connection.then(()=>{
         }
 
     });
+
+    //文章 --- 添加文章
+    app.post('/article/addArticle',async(req,res)=>{
+        const { userId,articleTitle,articleContent,articleType,articleCreateDate } = req.body;
+
+        let articleId = userId + articleCreateDate;//用户ID+时间戳
+        
+        try{
+            await articleModel.create({userId,articleId,articleTitle,articleContent,articleType});
+
+            let userOwnArticles = await userOwnArticleModel.findOne({userId});//用户拥有的文章id值
+
+
+
+            if(userOwnArticles){            //发布过文章
+                let userArticles = userOwnArticles.userArticles;
+
+                userArticles.push(articleId);
+                await userOwnArticleModel.updateOne({userId},{userArticles});
+            }else{                          //没有发布过文章
+                let userArticles = [];
+
+                userArticles.push(articleId);
+                await userOwnArticleModel.create({userId,userArticles});
+            }
+            res.json({
+                success:true,
+                message:'文章发布成功'
+            })
+
+            
+        }catch(err){
+            console.log('错误为',err);
+        }
+        
+    });
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });
@@ -122,6 +160,6 @@ app.listen(8088,(err)=>{
     if(err){
         console.log(err)
     }else{
-        console.log('http://localhost:8088'+'success')
+        console.log('http://localhost:8088')
     }
 })

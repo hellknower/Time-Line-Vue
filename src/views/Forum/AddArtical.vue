@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { addArticle } from '../../api/forum.js';
+
 const showdown = require('showdown');
 const converter = new showdown.Converter();
 
@@ -77,6 +79,36 @@ export default{
             return converter.makeHtml(value);
         },
         open(){
+            //不能发布空文章
+            //必须选择文章类型
+            let articleTitle = this.title
+            let articleContent = this.readmeData
+            let articleType = this.selectedKind
+            let userId = sessionStorage.getItem('userId');
+            let articleCreateDate = Date.now();
+            
+            if(articleTitle.length === 0){
+                this.$message({
+                    type:'error',
+                    message:'需要填写标题',
+                })
+            }else if(articleContent.length === 0){
+                this.$message({
+                    type:'error',
+                    message:'需要填写内容',
+                })
+            }else if(articleType.length === 0){
+                this.$message({
+                    type:'error',
+                    message:'需要选择文章类型',
+                })
+            }else{
+
+                addArticle({ userId,articleTitle,articleContent,articleType,articleCreateDate }).then((res)=>{
+                    console.log("a"+res)
+                    
+                }).catch()
+            }
             console.log('submit')
         },
     }

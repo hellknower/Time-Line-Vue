@@ -54,3 +54,11 @@ app.use(bodyParser.json());
 
 ## 为什么不使用element中的form表单
 - 可能其中一个元素被多次调用，减少对象调用的频率
+
+## mongoDB不能有两个id值
+- server文件夹下的articleModel.js
+- 其中开始定义了articleID和userID，报错 
+```
+[MongoError: E11000 duplicate key error collection: zhihu.people index: _id_ dup key
+```
+- 原因：mongoDB自动生成的ID值重复
