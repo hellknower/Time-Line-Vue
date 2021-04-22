@@ -10,9 +10,9 @@
                 <el-select v-model="selectedKind">
                     <el-option
                         v-for="item in articleKinds"
-                        :key="item.value"
-                        :value="item.value"
-                        :label="item.label"
+                        :key="item.typeValue"
+                        :value="item.typeValue"
+                        :label="item.typeName"
                     ></el-option>
                 </el-select>
 
@@ -41,6 +41,7 @@
 
 <script>
 import { addArticle } from '../../api/forum.js';
+import { findArticleType } from '../../api/api.js'
 
 const showdown = require('showdown');
 const converter = new showdown.Converter();
@@ -55,24 +56,13 @@ export default{
         }
     },
     mounted(){
-        this.articleKinds = [
-            {
-                value:1,
-                label:'前端'
-            },
-            {
-                value:2,
-                label:'后台'
-            },
-            {
-                value:3,
-                label:'数据库'
-            },
-            {
-                value:4,
-                label:'算法'
-            },
-        ];
+        findArticleType({}).then((res)=>{
+            if(res.success){
+                this.articleKinds = res.returnType;
+            }else{
+                console.log(res.message);
+            }
+        });
     },
     methods:{
         compileMarkDown(value){

@@ -2,7 +2,7 @@
     <div class='forumTop'>
         <div class='forum-all'>
                 <el-tabs class='forum-tabs' type='card' v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane v-for='i in forumTitile' :key='i.key' :label="i.name" :name='i.key'></el-tab-pane>
+                    <el-tab-pane v-for='i in forumTitile' :key='i.typeValue' :label="i.typeName" :name='i.typeValue'></el-tab-pane>
                 </el-tabs>
             <div @click='toArtical(i.id)' v-for='(i,index) in forums' :key='index' class='forum-one'>
                 <div class='forum-one-content'>
@@ -30,6 +30,8 @@
             <div @click='toAddConversation' class='forum-add'>
                 <img src="../../assets/添加.png" alt="">
             </div>
+            <el-button type="primary" size="default" @click="creat">创建</el-button>
+            <!--创建数据库-->
         </div>
     </div>
 </template>
@@ -37,25 +39,13 @@
 <script>
         //差filter,按钮点击颜色立刻消失,回复点击跳转,路由重定向和过滤
     import { mapState } from 'vuex'
+    import {findArticleType} from '../../api/api.js'
+
     export default {
         data(){
             return {
                 activeName:'1',
-                forumTitile:[
-                    {
-                        name:'前端',
-                        key:'1'
-                    },{
-                        name:'后端',
-                        key:'2'
-                    },{
-                        name:'移动端',
-                        key:'3'
-                    },{
-                        name:'测试',
-                        key:'4'
-                    }
-                ],
+                forumTitile:[],
             }
         },
         mounted(){
@@ -64,11 +54,28 @@
                 // console.log('item',item)
                 this.setHours(item);
             })
+            findArticleType({}).then((res)=>{
+                if(res.success){
+                    this.forumTitile = res.returnType;
+                }else{
+                    console.log(res.message);
+                }
+            });
+            // findArticleType()//请求文章类型
         },
         computed:{
             ...mapState(['forums'])
         },
         methods:{
+            creat(){//创建数据库
+                let forumTitile = this.forumTitile;
+                console.log(forumTitile)
+                findArticleType().then((res)=>{
+                    console.log('index',res)
+                }).catch((err)=>{
+                    console.log(err)
+                });
+            },
             buttonClick(item){
                 if(item.isChoose){
                     console.log('已选中')

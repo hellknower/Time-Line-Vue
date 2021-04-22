@@ -6,6 +6,8 @@ let userModel = require('./Model/userLoginModel');
 let articleModel = require('./Model/articleModel');
 let userOwnArticleModel = require('./Model/userOwnArticleModel');
 
+let articleType = require('./Model/articleType');//创建数据库
+
 const Connection = require('./Connect');
 
 let app = express()
@@ -154,6 +156,30 @@ Connection.then(()=>{
             })
         }
         
+    });
+
+    //文章 --- 获取文章类型
+    app.get('/findArticleType',async(req,res)=>{
+        let returnType = [];
+        let articleTypes = await articleType.find();
+        
+        if(articleTypes){
+            articleTypes.forEach((val)=>{
+                let {typeName,typeValue} = val;
+                returnType.push({typeName,typeValue});
+            });        
+            res.json({
+                success:true,
+                message:'文章类型寻找成功',
+                returnType
+            });
+        }else{     
+            res.json({
+                success:false,
+                message:'没有找到文章类型'
+            });
+        }
+
     });
 }).catch(err=>{
     console.log('数据库连接失败',err);
