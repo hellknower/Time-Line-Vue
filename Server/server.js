@@ -148,6 +148,10 @@ Connection.then(()=>{
             
         }catch(err){
             console.log('错误为',err);
+            res.json({
+                success:false,
+                message:'文章发布失败'
+            })
         }
         
     });

@@ -105,7 +105,20 @@ export default{
             }else{
 
                 addArticle({ userId,articleTitle,articleContent,articleType,articleCreateDate }).then((res)=>{
-                    console.log("a"+res)
+                    console.log("a",res)
+                    if(res.success){
+                        this.$message({
+                            type:'success',
+                            message:res.message
+                        });
+                        this.$router.replace('/main');
+
+                    }else{
+                        this.$message({
+                            type:'error',
+                            message:res.message
+                        });
+                    }
                     
                 }).catch()
             }
