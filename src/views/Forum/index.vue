@@ -36,9 +36,6 @@
             }
         },
         mounted(){
-            // this.forums.map((item)=>{
-            //     this.setHours(item);
-            // })
             findArticleType({}).then((res)=>{   //请求文章类型
                 if(res.success){
                     this.forumTitile = res.returnType;
@@ -46,11 +43,9 @@
                     console.log(res.message);
                 }
             });
+            this.tabClick(this.activeName);
         },
         components:{ArticleList},
-        // computed:{
-        //     ...mapState(['forums'])
-        // },
         methods:{
             buttonClick(item){
                 if(item.isChoose){
@@ -64,7 +59,9 @@
                 }
             },
             tabClick(val){
-                findArticleWithType({typeValue:val.name}).then((res)=>{
+                let value = val.name||val;
+                
+                findArticleWithType({typeValue:value}).then((res)=>{
                     if(res.success){
                         this.articleMessages = res.articles;
                     }else{
@@ -76,7 +73,6 @@
                 }).catch((err)=>{
                     console.log('错误为'+err)
                 })
-                console.log('clicks',val.name)
             },
             toArtical(id){
                 console.log(id)
