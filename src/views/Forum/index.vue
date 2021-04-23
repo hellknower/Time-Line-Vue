@@ -1,36 +1,20 @@
 <template>
     <div class='forumTop'>
         <div class='forum-all'>
-                <el-tabs class='forum-tabs' type='card' v-model="activeName" @tab-click="handleClick">
-                    <el-tab-pane v-for='i in forumTitile' :key='i.typeValue' :label="i.typeName" :name='i.typeValue'></el-tab-pane>
+                <el-tabs class='forum-tabs' type='card' v-model="activeName" @tab-click="tabClick">
+                    <el-tab-pane 
+                        v-for='i in forumTitile' 
+                        :key='i.typeValue' 
+                        :label="i.typeName" 
+                        :name='i.typeValue'
+                    >
+                        <ArticleList v-for="articleMessage in articleMessages" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
+                        <!-- <ArticleList/> -->
+                    </el-tab-pane>
                 </el-tabs>
-            <div @click='toArtical(i.id)' v-for='(i,index) in forums' :key='index' class='forum-one'>
-                <div class='forum-one-content'>
-                    <p>
-                        <span>{{i.articalAuthor}}</span>|
-                        <span>{{i.articalDateMsg}}</span>|
-                        <span>{{i.articalDirection}}</span>
-                    </p>
-                    <p>{{i.forumTitle}}</p>
-                    <el-row>
-                        <el-button 
-                            :class='{isClick:i.articalLike.isChoose}'
-                            icon="el-icon-thumb" size="small"
-                            @click.stop='buttonClick(i.articalLike)'
-                        >
-                            {{i.articalLike.likeCount}}
-                        </el-button>
-                        <el-button icon='el-icon-chat-round' size="small">
-                            {{i.articalComment}}
-                        </el-button>
-                    </el-row>
-                </div>
-                <!-- <img :src='i.forumImg' alt=""> -->
-            </div>
             <div @click='toAddConversation' class='forum-add'>
                 <img src="../../assets/添加.png" alt="">
             </div>
-            <el-button type="primary" size="default" @click="creat">创建</el-button>
             <!--创建数据库-->
         </div>
     </div>
@@ -38,44 +22,36 @@
 
 <script>
         //差filter,按钮点击颜色立刻消失,回复点击跳转,路由重定向和过滤
-    import { mapState } from 'vuex'
-    import {findArticleType} from '../../api/api.js'
+    // import { mapState } from 'vuex'
+    import { findArticleType } from '../../api/api.js'
+    import ArticleList from '../../components/ArticleList'
+    import {findArticleWithType} from '../../api/forum'
 
     export default {
         data(){
             return {
-                activeName:'1',
+                activeName:'SYPQ',
                 forumTitile:[],
+                articleMessages:[]
             }
         },
         mounted(){
-            // console.log(this.$store.state)
-           this.forums.map((item)=>{
-                // console.log('item',item)
-                this.setHours(item);
-            })
-            findArticleType({}).then((res)=>{
+            // this.forums.map((item)=>{
+            //     this.setHours(item);
+            // })
+            findArticleType({}).then((res)=>{   //请求文章类型
                 if(res.success){
                     this.forumTitile = res.returnType;
                 }else{
                     console.log(res.message);
                 }
             });
-            // findArticleType()//请求文章类型
         },
-        computed:{
-            ...mapState(['forums'])
-        },
+        components:{ArticleList},
+        // computed:{
+        //     ...mapState(['forums'])
+        // },
         methods:{
-            creat(){//创建数据库
-                let forumTitile = this.forumTitile;
-                console.log(forumTitile)
-                findArticleType().then((res)=>{
-                    console.log('index',res)
-                }).catch((err)=>{
-                    console.log(err)
-                });
-            },
             buttonClick(item){
                 if(item.isChoose){
                     console.log('已选中')
@@ -87,8 +63,20 @@
                     item.isChoose = !item.isChoose;
                 }
             },
-            handleClick(){
-                console.log('clicks')
+            tabClick(val){
+                findArticleWithType({typeValue:val.name}).then((res)=>{
+                    if(res.success){
+                        this.articleMessages = res.articles;
+                    }else{
+                        this.$message({
+                            type:'error',
+                            message:res.message
+                        })
+                    }
+                }).catch((err)=>{
+                    console.log('错误为'+err)
+                })
+                console.log('clicks',val.name)
             },
             toArtical(id){
                 console.log(id)

@@ -118,6 +118,29 @@ Connection.then(()=>{
 
     });
 
+    //文章 --- 根据文章类型查找文章
+    app.post('/article/findArticleWithType',async(req,res)=>{
+        const { typeValue } = req.body;
+
+        
+        try{
+            let articles = await articleModel.find({articleType:typeValue})
+            res.json({
+                success:true,
+                message:'文章查找成功',
+                articles
+            })
+                        
+        }catch(err){
+            console.log('错误为',err);
+            res.json({
+                success:false,
+                message:'文章查找失败'
+            })
+        }
+        
+    });
+
     //文章 --- 添加文章
     app.post('/article/addArticle',async(req,res)=>{
         const { userId,articleTitle,articleContent,articleType,articleCreateDate } = req.body;
