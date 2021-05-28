@@ -15,18 +15,6 @@
             </div>
             <div class="error-message">
                 <span v-show="!isUsernameRight">{{usernameErrorMsg}}</span>
-            </div>  
-            <div class="login-input login-password">
-                <span>旧密码:</span>
-                <el-input 
-                    v-model="oldPassword" 
-                    clearable 
-                    placeholder="请输入密码"
-                    @blur="checkOldPassword"
-                    @keydown.enter.native="forget"/>
-            </div>
-            <div class="error-message">
-                <span v-show="!isPasswordRight">{{passwordErrorMsg}}</span>
             </div>
             <div class="login-input login-password">
                 <span>密码:</span>

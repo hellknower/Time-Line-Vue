@@ -62,3 +62,8 @@ app.use(bodyParser.json());
 [MongoError: E11000 duplicate key error collection: zhihu.people index: _id_ dup key
 ```
 - 原因：mongoDB自动生成的ID值重复
+
+## 数据库表应该怎么设计？（不确定）
+- 文章表中只存入用户ID，导致页面中需要获取用户名时需要根据用户ID重新发送请求，可能会造成大量的资源占用
+- 解决方法：在后端中对数据进行处理后一次性返回到前端
+- 将数据处理方面的操作尽量放在后端处理，减少前端消耗，防止用户使用时可能会造成的卡顿

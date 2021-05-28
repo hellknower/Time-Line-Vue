@@ -8,6 +8,10 @@ let articleSchema = new Schema({
         required:true,
         unique:true
     },
+    ownUserName : {
+        type:String,
+        required:true,
+    },
     articleTitle:{          //文章标题
         type:String,
         required:true,

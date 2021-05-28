@@ -6,7 +6,7 @@ let userModel = require('./Model/userLoginModel');
 let articleModel = require('./Model/articleModel');
 let userOwnArticleModel = require('./Model/userOwnArticleModel');
 
-let articleType = require('./Model/articleType');//创建数据库
+let articleType = require('./Model/articleTypeModel');
 
 const Connection = require('./Connect');
 
@@ -122,15 +122,20 @@ Connection.then(()=>{
     app.post('/article/findArticleWithType',async(req,res)=>{
         const { typeValue } = req.body;
 
-        
         try{
-            let articles = await articleModel.find({articleType:typeValue})
-            res.json({
+            let articles = await articleModel.find({articleType:typeValue});
+
+            // //根据获取到的文章ID，类型查找对应的用户名以及类型名，并返回给前端
+            for(item of articles){                
+                const type = (await articleType.find({typeValue:item.articleType}))[0];
+                item.articleType = type.typeName;                
+            }
+            
+            res.send({
                 success:true,
                 message:'文章查找成功',
                 articles
-            })
-                        
+            })        
         }catch(err){
             console.log('错误为',err);
             res.json({
@@ -148,11 +153,10 @@ Connection.then(()=>{
         let articleId = userId + articleCreateDate;//用户ID+时间戳
         
         try{
-            await articleModel.create({userId,articleId,articleTitle,articleContent,articleType});
+            const user = await userModel.findOne({userId});
+            await articleModel.create({userId,articleId,articleTitle,articleContent,articleType,ownUserName:user.userName});
 
             let userOwnArticles = await userOwnArticleModel.findOne({userId});//用户拥有的文章id值
-
-
 
             if(userOwnArticles){            //发布过文章
                 let userArticles = userOwnArticles.userArticles;

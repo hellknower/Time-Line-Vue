@@ -5,13 +5,12 @@
         <div class='forum-one'>
             <div class='forum-one-content'>
                 <p>
-                    <span>
-                        <span>{{articleMessage.articleAuthor}}</span>|
-                        <span>{{articleMessage.articleDateMsg}}</span>
-                    </span>
+                    <span>{{articleMessage.ownUserName}}</span>|
+                    <span>{{countDate}}</span>|
                     <span>{{articleMessage.articleType}}</span>
                 </p>
                 <p>{{articleMessage.articleTitle}}</p>
+                <p ></p>
                 <!-- <el-row>
                     <el-button 
                         :class='{isClick:i.articalLike.isChoose}'
@@ -33,64 +32,55 @@
 export default({
     data(){
         return {
-    // articleLikeCount: 0,
-    // articleCollectCount: 0,
-    // articleCommentCount: 0,
-    // articleCreateDate: 2021-04-23T06:31:09.135Z,
-    // _id: 608269c9212a030b641dada3,
-    // articleId: 'a866e8864708f89bac977387aeb47eb362b1f20b1619159497925',
-    // articleTitle: "d'f'g",
-    // articleContent: '的风格',
-    // articleType: 'SYPH',
-    // articleLikePerson: [],
-    // articleCollectPerson: [],
-    // articleCommentPerson: [],
-            
+            // articleLikeCount: 0,
+            // articleCollectCount: 0,
+            // articleCommentCount: 0,
+            // articleCreateDate: 2021-04-23T06:31:09.135Z,
+            // _id: 608269c9212a030b641dada3,
+            // articleId: 'a866e8864708f89bac977387aeb47eb362b1f20b1619159497925',
+            // articleTitle: "d'f'g",
+            // articleContent: '的风格',
+            // articleType: 'SYPH',
+            // articleLikePerson: [],
+            // articleCollectPerson: [],
+            // articleCommentPerson: [],
+            countDate:''            
         }
     },
     props:['articleMessage'],
     mounted(){
+        console.log(this.articleMessage)
         let { articleCreateDate } = this.articleMessage;
         let date = new Date(articleCreateDate);
-        console.log('1',date)
-
-        // console.log(this.articleMessage)
-        // console.log(articleCreateDate.getHours())
-        // console.log('a',this.articleMessage)
+        this.setHours(date);
     },
     methods:{
-        setHours(item){
-            let date = new Date();
+        setHours(date){
+            let now = new Date();
+            
+            if(now.getFullYear() !== date.getFullYear()){
+                let year = now.getFullYear() - date.getFullYear(); 
+                // console.log(`${year}年前`)
+                this.countDate = `${year}年前`;
+            }else if(now.getMonth() !== date.getMonth()){
+                let month = now.getMonth() - date.getMonth(); 
+                // console.log(`${month}个月前`)
+                this.countDate = `${month}个月前`;
+            }else if(now.getDate() !== date.getDate()){
+                let day = now.getDate() - date.getDate();
 
-            if((date.getHours()-item.articalDate.getHours())<1){
-                item.articalDateMsg = '刚刚'
-                // console.log('刚刚')
-            }else
-            if((date.getHours()-item.articalDate.getHours())>1 && (date.getHours()-item.articalDate.getHours())<24){
-                
-                item.articalDateMsg = date.getHours()-item.articalDate.getHours();
-                console.log('24小时内')
-            }else
-            if((date.getDay()-item.articalDate.getDay())>1 && (date.getDay()-item.articalDate.getDay())<7){
-                
-                item.articalDateMsg = date.getDay()-item.articalDate.getDay();
-                console.log('1周内')
-            }else
-            if((date.getDay()-item.articalDate.getDay())>7 && (date.getDay()-item.articalDate.getDay())<30){
-                
-                item.articalDateMsg = date.getDay()-item.articalDate.getDay();
-                console.log('1月内')
-            }else
-            if((date.getMonth()-item.articalDate.getMonth())>1 && (date.getMonth()-item.articalDate.getMonth())<12){
-                
-                item.articalDateMsg = date.getMonth()-item.articalDate.getMonth();
-                console.log('1年内')
-            }else
-            if((date.getFullYear()-item.articalDate.getFullYear())>1){
-                
-                item.articalDateMsg = date.getFullYear()-item.articalDate.getFullYear();
-                console.log('几年内')
+                if(day > 7){
+                    // console.log(`${day%7}周前`);
+                    this.countDate = `${day%7}周前`;
+                }else{
+                    // console.log(`${day}天前`);
+                    this.countDate = `${day}天前`;
+                }
+            }else{
+                this.countDate = '今天发布';
             }
+            //一周以内但是跨月份的情况未能考虑
+            
         }
     }
 })
