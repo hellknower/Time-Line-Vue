@@ -146,6 +146,34 @@ Connection.then(()=>{
         
     });
 
+    //文章 --- 根据文章ID查找文章
+    app.post('/article/findArticleWithID',async(req,res)=>{
+        const { articleId } = req.body;
+
+        try{
+            let articles = await articleModel.find({articleId});
+
+            // //根据获取到的文章ID，类型查找对应的用户名以及类型名，并返回给前端
+            for(item of articles){                
+                const type = (await articleType.find({typeValue:item.articleType}))[0];
+                item.articleType = type.typeName;                
+            }
+            
+            res.send({
+                success:true,
+                message:'文章查找成功',
+                articles
+            })        
+        }catch(err){
+            console.log('错误为',err);
+            res.json({
+                success:false,
+                message:'文章查找失败'
+            })
+        }
+        
+    });
+
     //文章 --- 添加文章
     app.post('/article/addArticle',async(req,res)=>{
         const { userId,articleTitle,articleContent,articleType,articleCreateDate } = req.body;

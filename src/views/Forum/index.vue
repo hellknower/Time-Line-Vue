@@ -14,7 +14,6 @@
             <div @click='toAddConversation' class='forum-add'>
                 <img src="../../assets/添加.png" alt="">
             </div>
-            <!--创建数据库-->
         </div>
     </div>
 </template>
@@ -72,12 +71,8 @@
                     console.log('错误为'+err)
                 })
             },
-            toArtical(id){
-                // console.log(id)
-                this.$router.push('/artical'+id)
-            },
             toAddConversation(){
-                this.$router.push('/addArtical')
+                this.$router.push('/main/addArtical')
             },
 
         }
@@ -88,16 +83,11 @@
     .forumTop
         background:rgba(178,186,194,.15);
         padding-top:20px;
-        height:100%;
         .forum-all
             background:white;
             width:748px;
             height:100%;
             margin:0 auto;
-
-
-
-
             .forum-add
                 position:fixed;
                 top:90%;

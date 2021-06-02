@@ -17,3 +17,13 @@ export function findArticleWithType(data){
         data
     });
 }
+
+//文章 --- 根据文章类型查找文章
+export function findArticleWithId(data){
+    return request({
+        url:'/article/findArticleWithID',
+        method:'post',
+        data
+    });
+}
+

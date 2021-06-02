@@ -60,17 +60,29 @@ const routes = [
         name: 'forum',
         component: Forum,
       },
+      {
+        path:'/main/addArtical',
+        name:'addArtical',
+        component:AddArtical
+      },
+      {
+        path:'/main/artical/:id',
+        name:'Artical',
+        component:Artical,
+        props:true
+      },
     ]
   },
   {
-    path:'/addArtical',
+    path:'/main/addArtical',
     name:'addArtical',
     component:AddArtical
   },
   {
-    path:'/artical:id',
+    path:'/main/artical/:id',
     name:'Artical',
-    component:Artical
+    component:Artical,
+    props:true
   },
   {
     path: '/conversation',

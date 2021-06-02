@@ -1,29 +1,25 @@
 <template>
-    <div>
-        <!-- {{articleMessage}} -->
-        <!-- <div @click='toArtical(i.id)' v-for='(i,index) in forums' :key='index' class='forum-one'> -->
-        <div class='forum-one'>
-            <div class='forum-one-content'>
-                <p>
-                    <span>{{articleMessage.ownUserName}}</span>|
-                    <span>{{countDate}}</span>|
-                    <span>{{articleMessage.articleType}}</span>
-                </p>
-                <p>{{articleMessage.articleTitle}}</p>
-                <p ></p>
-                <!-- <el-row>
-                    <el-button 
-                        :class='{isClick:i.articalLike.isChoose}'
-                        icon="el-icon-thumb" size="small"
-                        @click.stop='buttonClick(i.articalLike)'
-                    >
-                        {{i.articalLike.likeCount}}
-                    </el-button>
-                    <el-button icon='el-icon-chat-round' size="small">
-                        {{i.articalComment}}
-                    </el-button>
-                </el-row> -->
-            </div>
+    <div class='forum-one' @click='toArtical(articleMessage.articleId)'>
+        <div class='forum-one-content'>
+            <p class="article-list-message">
+                <span>{{articleMessage.ownUserName}}</span>|
+                <span>{{countDate}}</span>|
+                <span>{{articleMessage.articleType}}</span>
+            </p>
+            <p class="article-list-title">{{articleMessage.articleTitle}}</p>
+            <p class="article-list-content"></p>
+            <!-- <el-row>
+                <el-button 
+                    :class='{isClick:i.articalLike.isChoose}'
+                    icon="el-icon-thumb" size="small"
+                    @click.stop='buttonClick(i.articalLike)'
+                >
+                    {{i.articalLike.likeCount}}
+                </el-button>
+                <el-button icon='el-icon-chat-round' size="small">
+                    {{i.articalComment}}
+                </el-button>
+            </el-row> -->
         </div>
     </div>
 </template>
@@ -49,12 +45,18 @@ export default({
     },
     props:['articleMessage'],
     mounted(){
-        console.log(this.articleMessage)
         let { articleCreateDate } = this.articleMessage;
+        let { articleContent } = this.articleMessage;
+        let reg = /^[\u4e00-\u9fa5a-zA-Z*-_]{1,20}$/;
+        console.log('a',articleContent.match(reg))
+        console.log(articleContent)
         let date = new Date(articleCreateDate);
         this.setHours(date);
     },
     methods:{
+        toArtical(id){
+            this.$router.push(`/main/artical/${id}`);
+        },
         setHours(date){
             let now = new Date();
             
@@ -95,7 +97,7 @@ export default({
     display:flex;
     text-align: left;
     .forum-one-content
-        p
+        .article-list-message
             color:#b2bac2;
             font-size: 15px;
             line-height: 0;
@@ -104,9 +106,12 @@ export default({
                 margin-right:8px;
             span:first-child 
                 margin-left:0px;
-        p:nth-child(2)
+        .article-list-title
+            line-height: 8px;
             color:rgb(46,49,53);
-            font-size: 28px;          
+            font-size: 24px;
+            font-weight:600
+            font-font-family: -apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial
         .isClick
             color: #409EFF!important;
             border-color: #c6e2ff!important;

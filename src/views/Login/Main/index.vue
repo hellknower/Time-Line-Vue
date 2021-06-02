@@ -118,7 +118,7 @@ import { login } from '../../../api/user.js';
 
                             sessionStorage.setItem('userId',userId);
                             
-                            this.$router.push('main');
+                            this.$router.push('/main');
                         }else{
                             this.$message({
                                 type:'error',
