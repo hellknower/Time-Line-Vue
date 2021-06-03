@@ -1,9 +1,7 @@
 <template>
     <div>
         <div class="article-comment">
-            <div class="article-comment-userImage">
-                <img src="../assets/data.png" alt="">
-            </div>
+            <UserHeadImage />
             <div class="article-comment-userMessage">
                 <p class="article-comment-userTitle">{{commentContent.userName}}</p>
                 <p class="article-comment-commentContent">{{commentContent.articleCommentContent}}</p>
@@ -13,6 +11,7 @@
 </template>
 
 <script>
+import UserHeadImage from '../components/UserHeadImage.vue'
 
 export default{
     data(){
@@ -20,10 +19,10 @@ export default{
         }
     },
     props:['commentContent'],
+    components:{UserHeadImage},
     methods:{
     },
     mounted() {
-        console.log(this.commentContent)
     },
 }
 </script>
@@ -34,13 +33,8 @@ export default{
     display:flex
     .article-comment-userImage
         margin: 0 10px 10px 10px
-        img
-            width: 32px
-            height: 32px
-            border-radius: 50%
-            border:1px solid black
-            overflow:hidden
     .article-comment-userMessage
+        text-align:left
         p
             font-size: 1rem
             margin:0

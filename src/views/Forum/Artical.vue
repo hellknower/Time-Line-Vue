@@ -2,11 +2,10 @@
     <div class="article-read">
         <div class="article-read-main">
             <div class="article-read-main-userMessage">
-                <div class="article-read-main-userMessage-image">
-                    <img src="../../assets/data.png" alt="">
-                </div>
+                <UserHeadImage/>
                 <div>
-                    <p></p>
+                    <p>{{articleMessages.ownUserName}}</p>
+                    <p><span>{{articleCreateDate}}</span></p>
                 </div>
             </div>
             <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
@@ -24,6 +23,7 @@
 <script>
     import {findArticleWithId} from '../../api/forum.js'
     import Comments from '../../components/Comments.vue'
+    import UserHeadImage from '../../components/UserHeadImage.vue'
     import {sendComment} from '../../api/forum.js'
     
     const showdown = require('showdown');
@@ -34,14 +34,16 @@
             return{
                 articleMessages:{},
                 commentContent:'',
-                sendButton:true
+                sendButton:true,
+                articleCreateDate:''
             }
         },
         mounted(){
             findArticleWithId({articleId:this.$route.params.id}).then((res)=>{
                 if(res.success){
                     this.articleMessages = res.articles[0];
-                    console.log(this.articleMessages)
+                    let date = new Date(this.articleMessages.articleCreateDate)
+                    this.articleCreateDate = `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
                 }else{
                     this.$message({
                         type:'error',
@@ -52,7 +54,7 @@
                 console.log('错误为'+err)
             })
         },
-        components:{Comments},
+        components:{Comments,UserHeadImage},
         methods:{
             compileMarkDown(value){
                 return converter.makeHtml(value);
@@ -88,6 +90,9 @@
         width: 640px
         background: white  
         padding: 0 20px
+        .article-read-main-userMessage
+            display:flex
+            text-align:left
         .article-read-title
             text-align:left
         .article-read-content
