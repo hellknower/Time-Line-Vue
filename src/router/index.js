@@ -15,6 +15,8 @@ import Artical from '../views/Forum/Artical.vue'
 import Conversation from '../views/Conversation'
 import TimeLine from '../views/TimeLine'
 
+import personMainPage from '../views/PersonMainPage'
+
 
 Vue.use(VueRouter)
 
@@ -69,6 +71,12 @@ const routes = [
         path:'/main/artical/:id',
         name:'Artical',
         component:Artical,
+        props:true
+      },
+      {
+        path:'/main/personMainPage/:id',
+        name:'personMainPage',
+        component:personMainPage,
         props:true
       },
     ]

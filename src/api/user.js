@@ -26,3 +26,12 @@ export function forgotten(data){
         data
     });
 }
+
+//用户 --- 用户主页获取用户拥有的文章信息
+export function personMain(data){
+    return request({
+        url:'/personMain',
+        method:'post',
+        data
+    });
+}

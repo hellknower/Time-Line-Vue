@@ -28,18 +28,6 @@
 export default({
     data(){
         return {
-            // articleLikeCount: 0,
-            // articleCollectCount: 0,
-            // articleCommentCount: 0,
-            // articleCreateDate: 2021-04-23T06:31:09.135Z,
-            // _id: 608269c9212a030b641dada3,
-            // articleId: 'a866e8864708f89bac977387aeb47eb362b1f20b1619159497925',
-            // articleTitle: "d'f'g",
-            // articleContent: '的风格',
-            // articleType: 'SYPH',
-            // articleLikePerson: [],
-            // articleCollectPerson: [],
-            // articleCommentPerson: [],
             countDate:''            
         }
     },

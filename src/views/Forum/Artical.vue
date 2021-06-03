@@ -2,7 +2,7 @@
     <div class="article-read">
         <div class="article-read-main">
             <div class="article-read-main-userMessage">
-                <UserHeadImage/>
+                <UserHeadImage :userId="articleMessages.ownUserName"/>
                 <div>
                     <p>{{articleMessages.ownUserName}}</p>
                     <p><span>{{articleCreateDate}}</span></p>
@@ -16,7 +16,6 @@
             </div>
             <Comments v-for="i in articleMessages.articleCommentPerson" :key="i.articleId" :commentContent="i"/>
         </div>
-        
     </div>
 </template>
 
@@ -83,7 +82,7 @@
 <style lang="stylus">
 .article-read
     background: rgba(178,186,194,0.15);
-    padding-top:8px
+    padding-top:20px
     .article-read-main 
         height:100%
         margin: 0 auto

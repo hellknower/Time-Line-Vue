@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="article-comment">
-            <UserHeadImage />
+            <UserHeadImage :userId="commentContent.userId"/>
             <div class="article-comment-userMessage">
                 <p class="article-comment-userTitle">{{commentContent.userName}}</p>
                 <p class="article-comment-commentContent">{{commentContent.articleCommentContent}}</p>

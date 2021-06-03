@@ -12,11 +12,12 @@ export default{
         }
     },
     mounted(){
+        console.log(this.userId)
     },
-    props:[],
+    props:['userId'],
     methods:{
         toUserMainPage(){
-            console.log('user');
+            this.$router.push(`/main/personMainPage/${this.userId}`);
         }
     }
 }

@@ -29,14 +29,8 @@ let articleSchema = new Schema({
         required:true,
         default:0
     },
-    articleLikePerson:{     //喜欢文章的人（存入文章ID）
-        type:[{
-            articleId:{             //文章Id
-                type:String,
-                required:true,
-                unique:true
-            }
-        }],
+    articleLikePerson:{     //喜欢文章的人（存入用户ID）
+        type:Array,
     },
     articleCollectCount:{   //文章收藏数
         type:Number,
@@ -44,13 +38,7 @@ let articleSchema = new Schema({
         default:0
     },
     articleCollectPerson:{   //收藏文章的人（存入用户ID）
-        type:[{
-            userId:{
-                type:String,
-                required:true,
-                unique:true
-            },
-        }],
+        type:Array,
     },
     articleCommentCount:{   //文章评论数
         type:Number,

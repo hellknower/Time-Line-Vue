@@ -270,7 +270,32 @@ Connection.then(()=>{
             })
 
         }
-    })
+    });
+
+    //用户 --- 用户主页获取用户拥有的文章信息
+    app.post('/personMain',async(req,res)=>{
+        const {userId} = req.body;
+        try{
+            let userOwnArticleId = (await userOwnArticleModel.findOne({userId})).userArticles;
+            let userOwnArticle = [];
+    
+            for(item of userOwnArticleId){
+                let articleMessage = await articleModel.findOne({articleId:item});
+                userOwnArticle.push(articleMessage);
+            }
+    
+            res.json({
+                success:true,
+                message:'获取成功',
+                userOwnArticle
+            });
+        }catch(err){
+            res.json({
+                success:false,
+                message:`获取失败，错误为${err}`
+            });
+        }        
+    });
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });
@@ -278,8 +303,8 @@ Connection.then(()=>{
 
 app.listen(8088,(err)=>{
     if(err){
-        console.log(err)
+        console.log(err);
     }else{
-        console.log('http://localhost:8088')
+        console.log('http://localhost:8088');
     }
 })
