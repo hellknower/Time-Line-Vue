@@ -21,7 +21,7 @@
 <script>
         //差filter,按钮点击颜色立刻消失,回复点击跳转,路由重定向和过滤
     import { findArticleType } from '../../api/api.js'
-    import ArticleList from '../../components/ArticleList'
+    import ArticleList from '../../components/ArticleList.vue'
     import {findArticleWithType} from '../../api/forum'
 
     export default {

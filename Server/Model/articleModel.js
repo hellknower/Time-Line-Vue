@@ -64,6 +64,11 @@ let articleSchema = new Schema({
                 required:true,
                 unique:true
             },
+            userName:{
+                type:String,
+                required:true,
+                unique:true
+            },
             articleCommentContent:{
                 type:String,
                 required:true,
@@ -71,6 +76,7 @@ let articleSchema = new Schema({
             articleCommentDate:{
                 type:Date,
                 required:true,
+                default:Date.now()
             }
         }],
     },

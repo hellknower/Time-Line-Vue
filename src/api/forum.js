@@ -27,3 +27,11 @@ export function findArticleWithId(data){
     });
 }
 
+//文章 --- 发送评论
+export function sendComment(data){
+    return request({
+        url:'/article/sendComment',
+        method:'post',
+        data
+    });
+}

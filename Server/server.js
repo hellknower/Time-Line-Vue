@@ -236,6 +236,41 @@ Connection.then(()=>{
         }
 
     });
+
+    //文章 --- 发送评论
+    app.post('/article/sendComment',async(req,res)=>{
+        const { articleId,userId,userName,articleCommentContent } = req.body;
+
+        try{
+            let commentPerson = (await articleModel.findOne({articleId})).articleCommentPerson;
+            
+            commentPerson.push({userId,userName,articleCommentContent,articleCommentDate:Date.now()});
+
+            
+            await articleModel.updateOne({articleId},{articleCommentPerson:commentPerson},async(err,doc)=>{
+                if(err){
+                    console.log(`评论失败，错误为${err}`);
+                }else{
+                    await articleModel.updateOne({articleId},{articleCommentCount:commentPerson.length});
+                }
+            });
+
+            const articles = await articleModel.findOne({articleId});
+
+            res.json({
+                message:'评论成功',
+                success:true,
+                articles
+            });
+        }catch(err){
+            console.log('错误为',err);
+            res.json({
+                success:false,
+                message:'文章发布失败'
+            })
+
+        }
+    })
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });

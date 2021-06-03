@@ -117,6 +117,7 @@ import { login } from '../../../api/user.js';
                             });
 
                             sessionStorage.setItem('userId',userId);
+                            sessionStorage.setItem('userName',username);
                             
                             this.$router.push('/main');
                         }else{

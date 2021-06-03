@@ -1,13 +1,21 @@
 <template>
     <div class="article-read">
         <div class="article-read-main">
-            <div>
-                <div></div>
+            <div class="article-read-main-userMessage">
+                <div class="article-read-main-userMessage-image">
+                    <img src="../../assets/data.png" alt="">
+                </div>
                 <div>
                     <p></p>
                 </div>
             </div>
+            <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
             <div class="article-read-content" v-html="compileMarkDown(articleMessages.articleContent)"></div>
+            <div class="write-comment">
+                <el-input v-model="commentContent" class="write-comment-input" placeholder="输入评论..." clearable></el-input><!-- @focus="showSendButton" @blur="hideSendButton"-->
+                <el-button v-show="sendButton" type="primary" class="write-comment-sendButton" @click="sendCommentButton">评论</el-button>
+            </div>
+            <Comments v-for="i in articleMessages.articleCommentPerson" :key="i.articleId" :commentContent="i"/>
         </div>
         
     </div>
@@ -15,6 +23,8 @@
 
 <script>
     import {findArticleWithId} from '../../api/forum.js'
+    import Comments from '../../components/Comments.vue'
+    import {sendComment} from '../../api/forum.js'
     
     const showdown = require('showdown');
     const converter = new showdown.Converter();
@@ -23,12 +33,15 @@
         data(){
             return{
                 articleMessages:{},
+                commentContent:'',
+                sendButton:true
             }
         },
         mounted(){
             findArticleWithId({articleId:this.$route.params.id}).then((res)=>{
                 if(res.success){
                     this.articleMessages = res.articles[0];
+                    console.log(this.articleMessages)
                 }else{
                     this.$message({
                         type:'error',
@@ -39,10 +52,28 @@
                 console.log('错误为'+err)
             })
         },
+        components:{Comments},
         methods:{
             compileMarkDown(value){
                 return converter.makeHtml(value);
             },
+            showSendButton(){
+                this.sendButton = true;
+            },
+            hideSendButton(){
+                this.sendButton = false;
+            },
+            sendCommentButton(){
+                const userId = sessionStorage.getItem('userId');
+                const userName = sessionStorage.getItem('userName');
+                const commentContent = this.commentContent;
+
+                sendComment({articleId:this.articleMessages.articleId,userId,userName,articleCommentContent:commentContent}).then((res)=>{
+                    this.articleMessages = res.articles;
+                }).catch((err)=>{
+                    console.log(`错误为${err}`)
+                })
+            }
         }
     }
 </script>
@@ -57,6 +88,8 @@
         width: 640px
         background: white  
         padding: 0 20px
+        .article-read-title
+            text-align:left
         .article-read-content
             width: 640px
             height:100%
@@ -66,4 +99,14 @@
             pre
                 background-color: #f8f8f8
                 padding: 15px 20px
+        .write-comment
+            height: 80px
+            margin-top: 60px
+            padding: 30px 30px 10px 30px
+            border-top: 1px solid #e5e6eb
+            text-align: right
+            .write-comment-input
+                margin-bottom: 8px
+            .write-comment-sendButton
+                padding: 8px 16px
 </style>
