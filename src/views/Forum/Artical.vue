@@ -2,7 +2,7 @@
     <div class="article-read">
         <div class="article-read-main">
             <div class="article-read-main-userMessage">
-                <UserHeadImage :userId="articleMessages.ownUserName"/>
+                <UserHeadImage :userId="userId"/>
                 <div>
                     <p>{{articleMessages.ownUserName}}</p>
                     <p><span>{{articleCreateDate}}</span></p>
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-    import {findArticleWithId} from '../../api/forum.js'
+    import {findArticleWithId,sendComment} from '../../api/forum.js'
+    import {findUserIdWithUserName} from '../../api/user.js'
     import Comments from '../../components/Comments.vue'
     import UserHeadImage from '../../components/UserHeadImage.vue'
-    import {sendComment} from '../../api/forum.js'
     
     const showdown = require('showdown');
     const converter = new showdown.Converter();
@@ -34,15 +34,21 @@
                 articleMessages:{},
                 commentContent:'',
                 sendButton:true,
-                articleCreateDate:''
+                articleCreateDate:'',
+                userId:''
             }
         },
         mounted(){
             findArticleWithId({articleId:this.$route.params.id}).then((res)=>{
                 if(res.success){
                     this.articleMessages = res.articles[0];
-                    let date = new Date(this.articleMessages.articleCreateDate)
+                    let date = new Date(this.articleMessages.articleCreateDate);
                     this.articleCreateDate = `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
+                    findUserIdWithUserName({userName:this.articleMessages.ownUserName}).then((res)=>{
+                        this.userId = res.userId;
+                    }).catch((err)=>{
+                        console.log('错误为'+err)
+                    });
                 }else{
                     this.$message({
                         type:'error',

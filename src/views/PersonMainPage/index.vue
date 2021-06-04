@@ -5,20 +5,18 @@
                 <img :src="require('../../assets/data.png')" alt="">
                 <p class="person-main-center-username">{{userName}}</p>
             </div>
-            <div>
-                <el-timeline>
-                    <el-timeline-item v-for="item in articleMessage"
-                        :key="item.articleId"
-                        :timestamp="item.date"
-                        placement="top"
-                        type="primary"
-                        size="normal">
-                        <el-card>
-                            {{item.articleTitle}}
-                        </el-card>                        
-                    </el-timeline-item>
-                </el-timeline>                
-            </div>
+            <el-timeline class="person-main-center-timeLine">
+                <el-timeline-item v-for="item in articleMessage"
+                    :key="item.articleId"
+                    :timestamp="item.date"
+                    placement="top"
+                    type="primary"
+                    size="normal">
+                    <el-card>
+                        {{item.articleTitle}}
+                    </el-card>                        
+                </el-timeline-item>
+            </el-timeline>
         </div>
     </div>
 </template>
@@ -42,7 +40,6 @@ export default{
                 let date = new Date(i.articleCreateDate);
                 i.date = `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
             }
-            console.log(this.articleMessage)
         }).catch((err)=>{
             console.log(err)
         });
@@ -66,4 +63,6 @@ export default{
                 width: 100px
                 height: 100px
                 border:3px solid rgb(178,186,194)
+        .person-main-center-timeLine
+            margin-top: 50px
 </style>

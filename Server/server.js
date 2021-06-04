@@ -296,6 +296,27 @@ Connection.then(()=>{
             });
         }        
     });
+
+    //用户 --- 根据用户名查找用户ID
+    app.post('/findUserIdWithUserName',async(req,res)=>{
+        const {userName} = req.body;
+
+        try{
+            let a = await userModel.findOne({userName});
+            let userId = (await userModel.findOne({userName})).userId;
+    
+            res.json({
+                success:true,
+                message:'查找成功',
+                userId
+            });
+        }catch(err){
+            res.json({
+                success:false,
+                message:`查找失败，错误为${err}`
+            });
+        }     
+    });
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });

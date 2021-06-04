@@ -35,3 +35,14 @@ export function personMain(data){
         data
     });
 }
+
+//用户 --- 根据用户名查找用户ID
+export function findUserIdWithUserName(data){
+    return request({
+        url:'/findUserIdWithUserName',
+        method:'post',
+        data
+    });
+}
+
+
