@@ -95,7 +95,6 @@ export default{
             }else{
 
                 addArticle({ userId,articleTitle,articleContent,articleType,articleCreateDate }).then((res)=>{
-                    console.log("a",res)
                     if(res.success){
                         this.$message({
                             type:'success',
@@ -112,7 +111,6 @@ export default{
                     
                 }).catch()
             }
-            console.log('submit')
         },
     }
 }

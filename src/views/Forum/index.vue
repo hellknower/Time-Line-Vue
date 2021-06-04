@@ -46,11 +46,9 @@
         methods:{
             buttonClick(item){
                 if(item.isChoose){
-                    console.log('已选中')
                     item.likeCount -= 1;
                     item.isChoose = !item.isChoose;
                 }else{
-                    console.log('未选中')
                     item.likeCount += 1;
                     item.isChoose = !item.isChoose;
                 }

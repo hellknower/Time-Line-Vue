@@ -34,10 +34,10 @@ export default({
     props:['articleMessage'],
     mounted(){
         let { articleCreateDate } = this.articleMessage;
-        let { articleContent } = this.articleMessage;
-        let reg = /^[\u4e00-\u9fa5a-zA-Z*-_]{1,20}$/;
-        console.log('a',articleContent.match(reg))
-        console.log(articleContent)
+        // let { articleContent } = this.articleMessage;
+        // let reg = /^[\u4e00-\u9fa5a-zA-Z*-_]{1,20}$/;
+        // console.log('a',articleContent.match(reg))
+        // console.log(articleContent)
         let date = new Date(articleCreateDate);
         this.setHours(date);
     },
@@ -50,20 +50,16 @@ export default({
             
             if(now.getFullYear() !== date.getFullYear()){
                 let year = now.getFullYear() - date.getFullYear(); 
-                // console.log(`${year}年前`)
                 this.countDate = `${year}年前`;
             }else if(now.getMonth() !== date.getMonth()){
                 let month = now.getMonth() - date.getMonth(); 
-                // console.log(`${month}个月前`)
                 this.countDate = `${month}个月前`;
             }else if(now.getDate() !== date.getDate()){
                 let day = now.getDate() - date.getDate();
 
                 if(day > 7){
-                    // console.log(`${day%7}周前`);
                     this.countDate = `${day%7}周前`;
                 }else{
-                    // console.log(`${day}天前`);
                     this.countDate = `${day}天前`;
                 }
             }else{

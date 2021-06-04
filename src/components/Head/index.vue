@@ -1,9 +1,8 @@
 <template>
     <div class='head'>
-        <router-link class='router-link-active' to='forum'>论坛</router-link>
+        <span @click="topMain" class='router-link-active'>首页</span>
         <router-link  class='router-link-active' to='conversation'>聊天室</router-link>
         <router-link class='router-link-active'  to='timeline'>时间线</router-link>
-        <!-- <router-link>登录</router-link> -->
     </div>
 </template>
 
@@ -15,12 +14,11 @@
             }
         },
         created(){
-            if(this.$route.name === 'forum'){
-                // console.log('a')
-            }
         },
         methods:{
-
+            topMain(){
+                this.$router.push('/main')
+            }
         },
     }
 </script>
@@ -36,6 +34,7 @@
             color:#71777c;
             text-decoration: none;
             margin-right:60px;
+            cursor:pointer
         .router-link-active:last-child
             margin-right:0px;
         .router-link-active:hover
