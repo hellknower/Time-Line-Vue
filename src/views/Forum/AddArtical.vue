@@ -31,7 +31,6 @@
                 type="textarea"
                 resize="none"
                 v-model="readmeData"
-                show-word-limit=true
             />
             <div class="add-article-content" v-html="compileMarkDown(readmeData)"></div>
         </div>
@@ -118,8 +117,9 @@ export default{
 
 <style lang="stylus">
     .add-article
-        height:100%
+        height:calc(100% - 124px)
         margin:0 auto;
+        border-top: 1px solid rgba(201,205,212,0.5)
         .add-article-head
             box-sizing:border-box
             padding:8px 16px
@@ -143,9 +143,8 @@ export default{
                     width:28px
                     padding:2px 16px
                     margin-left 8px
-
         .add-article-body
-            height:calc(100% - 64px)
+            height:100%
             border-top:1px solid #e1e4e8
             display:flex
             .add-article-content-input
@@ -159,5 +158,6 @@ export default{
             .add-article-content
                 width:50%
                 height:100%
+                text-align:left
                 overflow:auto
 </style>
