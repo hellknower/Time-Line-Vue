@@ -77,19 +77,22 @@ export default{
         contentScroll(event){
             let contentScroll = event.path[0];
             let inputScroll = event.path[1].firstChild.firstChild.firstChild;
+            let contentHeight = contentScroll.scrollHeight;
+            let inputHeight = inputScroll.scrollHeight;
             contentScroll.onscroll = ()=>{
                 inputScroll.onscroll = null
-                inputScroll.scrollTop = contentScroll.scrollTop
+                inputScroll.scrollTop = (contentScroll.scrollTop * inputHeight)/contentHeight;
             }
         },
         inputScroll(event){
             let contentScroll = event.path[1].lastChild;
             let inputScroll = event.path[0].firstChild.firstChild;
+            let contentHeight = contentScroll.scrollHeight;
+            let inputHeight = inputScroll.scrollHeight;
             inputScroll.onscroll = ()=>{                
                 contentScroll.onscroll = null
-                contentScroll.scrollTop = inputScroll.scrollTop
+                contentScroll.scrollTop = (inputScroll.scrollTop * contentHeight)/inputHeight;
             }
-
         },
         open(){
             //不能发布空文章
