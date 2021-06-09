@@ -9,8 +9,9 @@ import Login from '../views/Login'
 import Main from '../views/Main'
 
 import Forum from '../views/Forum'
-import AddArtical from '../views/Forum/AddArtical.vue'
-import Artical from '../views/Forum/Artical.vue'
+import AddArticle from '../views/Forum/AddArticle.vue'
+import Article from '../views/Forum/Article.vue'
+import EditArticle from '../views/Forum/EditArticle.vue'
 
 import Conversation from '../views/Conversation'
 import TimeLine from '../views/TimeLine'
@@ -69,14 +70,20 @@ const routes = [
         component: Forum,
       },
       {
-        path:'/main/addArtical',
-        name:'addArtical',
-        component:AddArtical
+        path:'/main/addArticle',
+        name:'addArticle',
+        component:AddArticle
       },
       {
-        path:'/main/artical/:id',
-        name:'Artical',
-        component:Artical,
+        path:'/main/article/:id',
+        name:'Article',
+        component:Article,
+        props:true
+      },
+      {
+        path:'/main/editArticle/:id',
+        name:'EditArticle',
+        component:EditArticle,
         props:true
       },
       {
@@ -88,14 +95,14 @@ const routes = [
     ]
   },
   {
-    path:'/main/addArtical',
-    name:'addArtical',
-    component:AddArtical
+    path:'/main/addArticle',
+    name:'addArticle',
+    component:AddArticle
   },
   {
-    path:'/main/artical/:id',
-    name:'Artical',
-    component:Artical,
+    path:'/main/article/:id',
+    name:'Article',
+    component:Article,
     props:true
   },
   {

@@ -1,5 +1,5 @@
 <template>
-    <div class='forum-one' @click='toArtical(articleMessage.articleId)'>
+    <div class='forum-one' @click='toArticle(articleMessage.articleId)'>
         <div class='forum-one-content'>
             <p class="article-list-message">
                 <span>{{articleMessage.ownUserName}}</span>|
@@ -10,14 +10,14 @@
             <p class="article-list-content"></p>
             <!-- <el-row>
                 <el-button 
-                    :class='{isClick:i.articalLike.isChoose}'
+                    :class='{isClick:i.articleLike.isChoose}'
                     icon="el-icon-thumb" size="small"
-                    @click.stop='buttonClick(i.articalLike)'
+                    @click.stop='buttonClick(i.articleLike)'
                 >
-                    {{i.articalLike.likeCount}}
+                    {{i.articleLike.likeCount}}
                 </el-button>
                 <el-button icon='el-icon-chat-round' size="small">
-                    {{i.articalComment}}
+                    {{i.articleComment}}
                 </el-button>
             </el-row> -->
         </div>
@@ -42,8 +42,8 @@ export default({
         this.setHours(date);
     },
     methods:{
-        toArtical(id){
-            this.$router.push(`/main/artical/${id}`);
+        toArticle(id){
+            this.$router.push(`/main/article/${id}`);
         },
         setHours(date){
             let now = new Date();

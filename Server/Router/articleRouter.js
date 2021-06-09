@@ -162,4 +162,33 @@ router.post('/article/sendComment',async(req,res)=>{
     }
 });
 
+//文章 --- 编辑文章
+router.post('/article/editArticle',async(req,res)=>{
+    const { articleId,articleTitle,articleContent,articleType } = req.body;
+
+    try{        
+        await articleModel.updateOne({articleId},{articleTitle,articleContent,articleType},(err)=>{
+            if(!err){
+                res.json({
+                    message:'修改成功',
+                    success:true
+                });
+            }else{
+                console.log('错误为',err);
+                res.json({
+                    success:false,
+                    message:'修改失败'
+                })
+            }
+        });
+
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'修改失败'
+        })
+    }
+});
+
 module.exports = router;

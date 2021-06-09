@@ -7,7 +7,7 @@ const service = axios.create({
 
 service.interceptors.request.use(
     config => {
-        console.log('config',config);
+        // console.log('config',config);
         return config;
     },
     error => {
@@ -17,7 +17,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     response => {
-        console.log('response',response)
+        // console.log('response',response)
         if(response.status === 200){
             const res = response.data;
             return res;

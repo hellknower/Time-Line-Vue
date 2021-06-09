@@ -6,7 +6,7 @@
                 <el-tab-pane 
                     v-for='i in forumTitile' 
                     :key='i.typeValue' 
-                    :label="i.typeName" 
+                    :label="i.typeName"
                     :name='i.typeValue'
                 />
                 <ArticleList v-for="articleMessage in articleMessages" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
@@ -70,7 +70,7 @@
                 })
             },
             toAddConversation(){
-                this.$router.push('/main/addArtical')
+                this.$router.push('/main/addArticle')
             },
 
         }
