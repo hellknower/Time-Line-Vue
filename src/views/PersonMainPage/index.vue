@@ -14,7 +14,7 @@
                     size="normal">
                     <el-card>
                         {{item.articleTitle}}
-                        <el-button type="primary" size="default" @click="deleteButton(item.articleId)">删除</el-button>
+                        <el-button v-show="showButton" type="primary" size="default" @click="deleteButton(item.articleId)">删除</el-button>
                         
                     </el-card>                        
                 </el-timeline-item>
@@ -29,18 +29,24 @@ import {deleteArticle} from '../../api/forum.js'
 
 export default{
     data() {
-        return{            
+        return{     
+            userId:'',       
             userName:'',
-            articleMessage:[]
+            articleMessage:[],
+            showButton:false
         }
     },
     mounted(){
-        this.userName = sessionStorage.getItem('userName');
-        this.getPersonMainMessage();        
+        this.userId = this.$route.params.id;
+        // this.userName = sessionStorage.getItem('userName');
+        this.getPersonMainMessage();
+        if(this.userId === sessionStorage.getItem('userId')){
+            this.showButton = true;
+        }
     },
     methods:{
         getPersonMainMessage(){
-            personMain({userId:this.$route.params.id}).then((res)=>{
+            personMain({userId:this.userId}).then((res)=>{
                 this.articleMessage = res.userOwnArticle;
                 for(let i of this.articleMessage){
                     let date = new Date(i.articleCreateDate);
