@@ -14,6 +14,8 @@
                     size="normal">
                     <el-card>
                         {{item.articleTitle}}
+                        <el-button type="primary" size="default" @click="deleteButton(item.articleId)">删除</el-button>
+                        
                     </el-card>                        
                 </el-timeline-item>
             </el-timeline>
@@ -23,6 +25,7 @@
 
 <script>
 import {personMain} from '../../api/user.js'
+import {deleteArticle} from '../../api/forum.js'
 
 export default{
     data() {
@@ -33,16 +36,32 @@ export default{
     },
     mounted(){
         this.userName = sessionStorage.getItem('userName');
-
-        personMain({userId:this.$route.params.id}).then((res)=>{
-            this.articleMessage = res.userOwnArticle;
-            for(let i of this.articleMessage){
-                let date = new Date(i.articleCreateDate);
-                i.date = `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
-            }
-        }).catch((err)=>{
-            console.log(err)
-        });
+        this.getPersonMainMessage();        
+    },
+    methods:{
+        getPersonMainMessage(){
+            personMain({userId:this.$route.params.id}).then((res)=>{
+                this.articleMessage = res.userOwnArticle;
+                for(let i of this.articleMessage){
+                    let date = new Date(i.articleCreateDate);
+                    i.date = `${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日`;
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
+        },
+        deleteButton(item){
+            let userId = sessionStorage.getItem('userId');
+            deleteArticle({userId:userId,articleId:item}).then((res)=>{
+                this.$message({
+                    message: res.message,
+                    type: 'success'
+                });
+                this.getPersonMainMessage();
+            }).catch((err)=>{                
+                console.log(err)
+            })
+        }
     }
 }
 </script>

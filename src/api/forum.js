@@ -44,3 +44,12 @@ export function editArticle(data){
         data
     });
 }
+
+//文章 --- 删除文章
+export function deleteArticle(data){
+    return request({
+        url:'/article/deleteArticle',
+        method:'post',
+        data
+    });
+}

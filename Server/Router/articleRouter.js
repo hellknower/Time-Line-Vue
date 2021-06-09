@@ -191,4 +191,48 @@ router.post('/article/editArticle',async(req,res)=>{
     }
 });
 
+//文章 --- 删除文章
+router.post('/article/deleteArticle',async(req,res)=>{
+    const { userId,articleId } = req.body;
+
+    try{        
+       
+        await articleModel.deleteOne({articleId},async(err)=>{
+            if(!err){
+                let userArticles = (await userOwnArticleModel.findOne({userId})).userArticles;
+                userArticles.remove(articleId);
+                await userOwnArticleModel.updateOne({userId},{userArticles},async(err)=>{
+                    if(!err){
+                        res.json({
+                            message:'删除成功',
+                            success:true,
+                            userArticles
+                        });
+                    }else{
+                        console.log('错误为',err);
+                        res.json({
+                            success:false,
+                            message:'删除失败'
+                        })
+                    }
+    
+                });
+            }else{
+                console.log('错误为',err);
+                res.json({
+                    success:false,
+                    message:'删除失败'
+                })
+            }
+        });
+
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'删除失败'
+        })
+    }
+});
+
 module.exports = router;
