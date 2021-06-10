@@ -15,13 +15,13 @@
                 <el-input v-model="commentContent" class="write-comment-input" placeholder="输入评论..." clearable></el-input><!-- @focus="showSendButton" @blur="hideSendButton"-->
                 <el-button v-show="sendButton" type="primary" class="write-comment-sendButton" @click="sendCommentButton">评论</el-button>
             </div>
-            <Comments v-for="i in articleMessages.articleCommentPerson" :key="i.articleId" :commentContent="i"/>
+            <Comments v-for="i in articleMessages.articleCommentPerson" :key="i.articleId" :articleId="articleMessages.articleId" :commentContent="i" :deleteButton="deleteButton"/>
         </div>
     </div>
 </template>
 
 <script>
-    import {findArticleWithId,sendComment} from '../../api/forum.js'
+    import {findArticleWithId,sendComment,deleteComment} from '../../api/forum.js'
     import {findUserIdWithUserName} from '../../api/user.js'
     import Comments from '../../components/Comments.vue'
     import UserHeadImage from '../../components/UserHeadImage.vue'
@@ -71,6 +71,20 @@
             },
             edit(){
                 this.$router.push(`/main/editArticle/${this.articleMessages.articleId}`)
+            },
+            deleteButton(commentId,articleId){
+                deleteComment({commentId,articleId}).then((res)=>{
+                    this.$message({
+                        type:'success',
+                        message:res.message
+                    });
+                    this.$router.go(0);
+                }).catch((err)=>{
+                    this.$message({
+                        type:'error',
+                        message:err
+                    });
+                })
             },
             showSendButton(){
                 this.sendButton = true;

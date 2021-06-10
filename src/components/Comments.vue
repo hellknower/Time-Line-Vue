@@ -6,6 +6,8 @@
                 <p class="article-comment-userTitle">{{commentContent.userName}}</p>
                 <p class="article-comment-commentContent">{{commentContent.articleCommentContent}}</p>
             </div>
+            <el-button type="primary" size="default" @click="deleteButton(commentContent._id,articleId)">删除</el-button>
+            
         </div>
     </div>
 </template>
@@ -18,7 +20,7 @@ export default{
         return{
         }
     },
-    props:['commentContent'],
+    props:['articleId','commentContent','deleteButton',],
     components:{UserHeadImage},
     methods:{
     },

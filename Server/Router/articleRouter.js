@@ -234,5 +234,42 @@ router.post('/article/deleteArticle',async(req,res)=>{
         })
     }
 });
+//文章 --- 删除评论
+router.post('/article/deleteComment',async(req,res)=>{
+    const { commentId,articleId } = req.body;
+
+    try{
+        let article = await articleModel.findOne({articleId});
+        let comment = article.articleCommentPerson;
+        let commentCount = article.articleCommentCount;
+        for(item of comment){
+            if(commentId == item._id){
+                let index = comment.indexOf(item);
+                comment.splice(index,1);
+                commentCount-=1;
+            }
+        }
+        await articleModel.updateOne({articleId},{articleCommentPerson:comment,articleCommentCount:commentCount},(err)=>{
+            if(!err){
+                res.json({
+                    message:'删除成功',
+                    success:true
+                });
+            }else{
+                console.log('错误为',err);
+                res.json({
+                    success:false,
+                    message:'删除失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'删除失败'
+        })
+    }
+});
 
 module.exports = router;

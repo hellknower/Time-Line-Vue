@@ -53,3 +53,12 @@ export function deleteArticle(data){
         data
     });
 }
+
+//文章 --- 删除评论
+export function deleteComment(data){
+    return request({
+        url:'/article/deleteComment',
+        method:'post',
+        data
+    });
+}
