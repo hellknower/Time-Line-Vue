@@ -6,7 +6,7 @@
                 <p class="article-comment-userTitle">{{commentContent.userName}}</p>
                 <p class="article-comment-commentContent">{{commentContent.articleCommentContent}}</p>
             </div>
-            <el-button type="primary" size="default" @click="deleteButton(commentContent._id,articleId)">删除</el-button>
+            <el-button v-show="showButton" type="primary" size="default" @click="deleteButton(commentContent._id,articleId)">删除</el-button>
             
         </div>
     </div>
@@ -18,13 +18,23 @@ import UserHeadImage from '../components/UserHeadImage.vue'
 export default{
     data(){
         return{
+            userName:'',
+            showButton:false,
         }
     },
-    props:['articleId','commentContent','deleteButton',],
+    props:['articleId','commentContent','deleteButton','ownUserName'],
     components:{UserHeadImage},
     methods:{
     },
     mounted() {
+        this.userName = sessionStorage.getItem('userName');
+
+        if(this.userName === this.commentContent.userName){
+            this.showButton = true;
+        }
+        if(this.ownUserName === sessionStorage.getItem('userName')){
+            this.showButton = true;
+        }
     },
 }
 </script>
