@@ -20,6 +20,12 @@ let userSchema = new Schema({
     userCreateDate:{
         type:Date,
         required:true
+    },
+    userLikes:{
+        type:Array,
+    },
+    userCollect:{
+        type:Array,
     }
 });
 

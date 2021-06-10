@@ -272,4 +272,50 @@ router.post('/article/deleteComment',async(req,res)=>{
     }
 });
 
+//文章 --- 点赞
+router.post('/article/likeArticle',async(req,res)=>{
+    const {articleId,userId} = req.body;
+
+    try{
+        let userLikes = (await userModel.findOne({userId})).userLikes;
+        let articleLike = await articleModel.findOne({articleId});
+        let articleLikeCount = articleLike.articleLikeCount;
+        let articleLikePerson = articleLike.articleLikePerson;
+
+        articleLikePerson.push(userId);
+        userLikes.push(articleId);
+
+        await userModel.updateOne({userId},{userLikes});
+        await articleModel.updateOne({articleId},{articleLikePerson},async(err)=>{
+            if(!err){
+                articleLikeCount +=1;
+                await articleModel.updateOne({articleId},{articleLikeCount},(err)=>{
+                    if(!err){
+                        res.json({
+                            success:true,
+                            message:'点赞成功'
+                        })
+                    }else{                        
+                        res.json({
+                            success:false,
+                            message:'点赞失败'
+                        })
+                    }
+                });
+            }else{
+                res.json({
+                    success:false,
+                    message:'点赞失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'点赞失败'
+        })
+    }
+})
+
 module.exports = router;

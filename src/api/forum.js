@@ -62,3 +62,21 @@ export function deleteComment(data){
         data
     });
 }
+
+//文章 --- 点赞
+export function likeArticle(data){
+    return request({
+        url:'/article/likeArticle',
+        method:'post',
+        data
+    });
+}
+
+//文章 --- 取消点赞
+// export function dislikeArticle(data){
+//     return request({
+//         url:'/article/dislikeArticle',
+//         method:'post',
+//         data
+//     });
+// }

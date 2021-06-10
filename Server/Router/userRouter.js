@@ -139,13 +139,35 @@ router.post('/findUserIdWithUserName',async(req,res)=>{
     const {userName} = req.body;
 
     try{
-        let a = await userModel.findOne({userName});
         let userId = (await userModel.findOne({userName})).userId;
 
         res.json({
             success:true,
             message:'查找成功',
             userId
+        });
+    }catch(err){
+        res.json({
+            success:false,
+            message:`查找失败，错误为${err}`
+        });
+    }     
+});
+
+//用户 --- 获取用户喜欢和收藏的文章
+router.post('/getLikeAndCollect',async(req,res)=>{
+    const {userId} = req.body;
+
+    try{
+        let user = await userModel.findOne({userId});
+        let userLikes = user.userLikes;
+        let userCollect = user.userCollect;
+        
+        res.json({
+            success:true,
+            message:'查找成功',
+            userLikes,
+            userCollect
         });
     }catch(err){
         res.json({

@@ -45,4 +45,12 @@ export function findUserIdWithUserName(data){
     });
 }
 
+//用户 --- 获取用户喜欢和收藏的文章
+export function getLikeAndCollect(data){
+    return request({
+        url:'/getLikeAndCollect',
+        method:'post',
+        data
+    });
+}
 
