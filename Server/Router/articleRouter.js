@@ -288,7 +288,7 @@ router.post('/article/likeArticle',async(req,res)=>{
         await userModel.updateOne({userId},{userLikes});
         await articleModel.updateOne({articleId},{articleLikePerson},async(err)=>{
             if(!err){
-                articleLikeCount +=1;
+                articleLikeCount = articleLikePerson.length;
                 await articleModel.updateOne({articleId},{articleLikeCount},(err)=>{
                     if(!err){
                         res.json({
@@ -336,7 +336,7 @@ router.post('/article/dislikeArticle',async(req,res)=>{
         }
         for(let item of userLikes){
             if(item === articleId){
-                let index = articleLikePerson.indexOf(articleId);
+                let index = userLikes.indexOf(articleId);
                 userLikes.splice(index,1);
             }
         }
@@ -344,8 +344,110 @@ router.post('/article/dislikeArticle',async(req,res)=>{
         await userModel.updateOne({userId},{userLikes});
         await articleModel.updateOne({articleId},{articleLikePerson},async(err)=>{
             if(!err){
-                articleLikeCount -=1;
+                articleLikeCount = articleLikePerson.length;
                 await articleModel.updateOne({articleId},{articleLikeCount},(err)=>{
+                    if(!err){
+                        res.json({
+                            success:true,
+                            message:'点赞成功'
+                        })
+                    }else{                        
+                        res.json({
+                            success:false,
+                            message:'点赞失败'
+                        })
+                    }
+                });
+            }else{
+                res.json({
+                    success:false,
+                    message:'点赞失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'点赞失败'
+        })
+    }
+});
+
+//文章 --- 收藏
+router.post('/article/collectArticle',async(req,res)=>{
+    const {articleId,userId} = req.body;
+
+    try{
+        let userCollect = (await userModel.findOne({userId})).userCollect;
+        let articleCollect = await articleModel.findOne({articleId});
+        let articleCollectCount = articleCollect.articleCollectCount;
+        let articleCollectPerson = articleCollect.articleCollectPerson;
+
+        articleCollectPerson.push(userId);
+        userCollect.push(articleId);
+
+        await userModel.updateOne({userId},{userCollect});
+        await articleModel.updateOne({articleId},{articleCollectPerson},async(err)=>{
+            if(!err){
+                articleCollectCount = articleCollectPerson.length;
+                await articleModel.updateOne({articleId},{articleCollectCount},(err)=>{
+                    if(!err){
+                        res.json({
+                            success:true,
+                            message:'点赞成功'
+                        })
+                    }else{                        
+                        res.json({
+                            success:false,
+                            message:'点赞失败'
+                        })
+                    }
+                });
+            }else{
+                res.json({
+                    success:false,
+                    message:'点赞失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'点赞失败'
+        })
+    }
+});
+
+// 文章 --- 取消收藏
+router.post('/article/discollectArticle',async(req,res)=>{
+    const {articleId,userId} = req.body;
+
+    try{
+        let userCollect = (await userModel.findOne({userId})).userCollect;
+        let articleCollect = await articleModel.findOne({articleId});
+        let articleCollectCount = articleCollect.articleCollectCount;
+        let articleCollectPerson = articleCollect.articleCollectPerson;
+
+        for(let item of articleCollectPerson){
+            if(item === userId){
+                let index = articleCollectPerson.indexOf(userId);
+                articleCollectPerson.splice(index,1);
+            }
+        }
+        for(let item of userCollect){
+            if(item === articleId){
+                let index = userCollect.indexOf(articleId);
+                userCollect.splice(index,1);
+            }
+        }
+
+        await userModel.updateOne({userId},{userCollect});
+        await articleModel.updateOne({articleId},{articleCollectPerson},async(err)=>{
+            if(!err){
+                articleCollectCount = articleCollectPerson.length;
+                await articleModel.updateOne({articleId},{articleCollectCount},(err)=>{
                     if(!err){
                         res.json({
                             success:true,

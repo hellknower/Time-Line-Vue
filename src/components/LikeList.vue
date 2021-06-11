@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import {likeArticle,dislikeArticle} from '../api/forum.js';
+import {likeArticle,dislikeArticle,collectArticle,discollectArticle} from '../api/forum.js';
 import {getLikeAndCollect} from '../api/user.js'
 
 export default {
     data(){
         return{
             showLikeButton:true,
-            showCollectButton:false,
+            showCollectButton:true,
             userCollect:[],
             userLikes:[],
             userId:''
@@ -31,6 +31,11 @@ export default {
             for(let item of this.userLikes){
                 if(item === this.articleId){
                     this.showLikeButton = false;
+                }
+            }
+            for(let item of this.userCollect){
+                if(item === this.articleId){
+                    this.showCollectButton = false;
                 }
             }
         }).catch((err)=>{
@@ -52,11 +57,20 @@ export default {
             }).catch((err)=>{
                 console.log(err)
             });
-            console.log('like')
         },
         collectButton(){
-            this.showCollectButton = !this.showCollectButton
-            console.log('collect')
+            let articleId = this.articleId;
+            let userId = this.userId;
+
+            collectArticle({articleId,userId}).then((res)=>{
+                if(res.success){
+                    this.showCollectButton = !this.showCollectButton
+                }else{
+                    console.log(res.message);
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
         },
         dislikeButton(){
             let articleId = this.articleId;
@@ -71,12 +85,20 @@ export default {
             }).catch((err)=>{
                 console.log(err)
             });
-            // this.showLikeButton = !this.showLikeButton
-            console.log('dislike')
         },
         discollectButton(){
-            this.showCollectButton = !this.showCollectButton
-            console.log('discollect')
+            let articleId = this.articleId;
+            let userId = this.userId;
+
+            discollectArticle({articleId,userId}).then((res)=>{
+                if(res.success){
+                    this.showCollectButton = !this.showCollectButton
+                }else{
+                    console.log(res.message);
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
 
         }
     },

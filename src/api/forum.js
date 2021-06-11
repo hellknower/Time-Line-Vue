@@ -80,3 +80,21 @@ export function dislikeArticle(data){
         data
     });
 }
+
+//文章 --- 收藏
+export function collectArticle(data){
+    return request({
+        url:'/article/collectArticle',
+        method:'post',
+        data
+    });
+}
+
+// 文章 --- 取消收藏
+export function discollectArticle(data){
+    return request({
+        url:'/article/discollectArticle',
+        method:'post',
+        data
+    });
+}
