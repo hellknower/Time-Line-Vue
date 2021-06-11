@@ -12,7 +12,7 @@
             <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
             <div class="article-read-content" v-html="compileMarkDown(articleMessages.articleContent)"></div>
             <div class="write-comment">
-                <el-input v-model="commentContent" class="write-comment-input" placeholder="输入评论..." clearable></el-input><!-- @focus="showSendButton" @blur="hideSendButton"-->
+                <el-input v-model="commentContent" class="write-comment-input" placeholder="输入评论..." clearable></el-input>
                 <el-button v-show="sendButton" type="primary" class="write-comment-sendButton" @click="sendCommentButton">评论</el-button>
             </div>
             <Comments v-for="i in articleMessages.articleCommentPerson" :key="i.articleId" :ownUserName="articleMessages.ownUserName" :articleId="articleMessages.articleId" :commentContent="i" :deleteButton="deleteButton"/>

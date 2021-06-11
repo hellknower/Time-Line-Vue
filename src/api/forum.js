@@ -72,11 +72,11 @@ export function likeArticle(data){
     });
 }
 
-//文章 --- 取消点赞
-// export function dislikeArticle(data){
-//     return request({
-//         url:'/article/dislikeArticle',
-//         method:'post',
-//         data
-//     });
-// }
+// 文章 --- 取消点赞
+export function dislikeArticle(data){
+    return request({
+        url:'/article/dislikeArticle',
+        method:'post',
+        data
+    });
+}

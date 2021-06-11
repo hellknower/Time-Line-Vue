@@ -18,11 +18,6 @@ Connection.then(()=>{
     app.use(userRouter);
     app.use(articleRouter);
 
-    //文章 --- 取消点赞
-    app.post('/article/dislikeArticle',(req,res)=>{
-        const {articleId} = req.body;
-        console.log(articleId);
-    })
 }).catch(err=>{
     console.log('数据库连接失败',err);
 });

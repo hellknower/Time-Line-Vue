@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {likeArticle} from '../api/forum.js';
+import {likeArticle,dislikeArticle} from '../api/forum.js';
 import {getLikeAndCollect} from '../api/user.js'
 
 export default {
@@ -24,6 +24,7 @@ export default {
     mounted(){
         this.userId = sessionStorage.getItem('userId');
         let userId = this.userId;
+
         getLikeAndCollect({userId}).then((res)=>{
             this.userLikes = res.userLikes;
             this.userCollect = res.userCollect;
@@ -41,9 +42,10 @@ export default {
         likeButton(){
             let articleId = this.articleId;
             let userId = this.userId;
+
             likeArticle({articleId,userId}).then((res)=>{
                 if(res.success){
-                    this.showLikeButton = !this.showLikeButton
+                    this.showLikeButton = !this.showLikeButton;
                 }else{
                     console.log(res.message);
                 }
@@ -57,6 +59,18 @@ export default {
             console.log('collect')
         },
         dislikeButton(){
+            let articleId = this.articleId;
+            let userId = this.userId;
+
+            dislikeArticle({articleId,userId}).then((res)=>{
+                if(res.success){
+                    this.showLikeButton = !this.showLikeButton;
+                }else{
+                    console.log(res.message);
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
             // this.showLikeButton = !this.showLikeButton
             console.log('dislike')
         },

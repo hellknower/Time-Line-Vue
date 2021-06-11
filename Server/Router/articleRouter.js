@@ -316,6 +316,62 @@ router.post('/article/likeArticle',async(req,res)=>{
             message:'点赞失败'
         })
     }
-})
+});
+
+//文章 --- 取消点赞
+router.post('/article/dislikeArticle',async(req,res)=>{
+    const {articleId,userId} = req.body;
+
+    try{
+        let userLikes = (await userModel.findOne({userId})).userLikes;
+        let articleLike = await articleModel.findOne({articleId});
+        let articleLikeCount = articleLike.articleLikeCount;
+        let articleLikePerson = articleLike.articleLikePerson;
+
+        for(let item of articleLikePerson){
+            if(item === userId){
+                let index = articleLikePerson.indexOf(userId);
+                articleLikePerson.splice(index,1);
+            }
+        }
+        for(let item of userLikes){
+            if(item === articleId){
+                let index = articleLikePerson.indexOf(articleId);
+                userLikes.splice(index,1);
+            }
+        }
+
+        await userModel.updateOne({userId},{userLikes});
+        await articleModel.updateOne({articleId},{articleLikePerson},async(err)=>{
+            if(!err){
+                articleLikeCount -=1;
+                await articleModel.updateOne({articleId},{articleLikeCount},(err)=>{
+                    if(!err){
+                        res.json({
+                            success:true,
+                            message:'点赞成功'
+                        })
+                    }else{                        
+                        res.json({
+                            success:false,
+                            message:'点赞失败'
+                        })
+                    }
+                });
+            }else{
+                res.json({
+                    success:false,
+                    message:'点赞失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'点赞失败'
+        })
+    }
+});
 
 module.exports = router;
