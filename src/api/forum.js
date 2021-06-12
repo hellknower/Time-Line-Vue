@@ -98,3 +98,12 @@ export function discollectArticle(data){
         data
     });
 }
+
+// 文章 --- 审核通过
+export function reExamined(data){
+    return request({
+        url:'/article/reExamined',
+        method:'post',
+        data
+    });
+}

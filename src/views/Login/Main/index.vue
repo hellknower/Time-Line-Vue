@@ -115,11 +115,17 @@ import { login } from '../../../api/user.js';
                                 type:'success',
                                 message:message
                             });
-
-                            sessionStorage.setItem('userId',userId);
-                            sessionStorage.setItem('userName',username);
-                            
-                            this.$router.push('/main');
+                            if(username === 'admin'){
+                                sessionStorage.setItem('userId',userId);
+                                sessionStorage.setItem('userName',username);
+                                
+                                this.$router.push('/main/adminIndex');
+                            }else{
+                                sessionStorage.setItem('userId',userId);
+                                sessionStorage.setItem('userName',username);
+                                
+                                this.$router.push('/main');
+                            }
                         }else{
                             this.$message({
                                 type:'error',

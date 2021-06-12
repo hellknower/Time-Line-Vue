@@ -9,6 +9,8 @@ import Login from '../views/Login'
 import Main from '../views/Main'
 
 import Forum from '../views/Forum'
+import AdminIndex from '../views/Forum/AdminIndex.vue'
+import AdminArticle from '../views/Forum/AdminArticle.vue'
 import AddArticle from '../views/Forum/AddArticle.vue'
 import Article from '../views/Forum/Article.vue'
 import EditArticle from '../views/Forum/EditArticle.vue'
@@ -63,6 +65,17 @@ const routes = [
         path: '/main/',
         name: 'forum',
         component: Forum,
+      },
+      {
+        path: '/main/adminIndex',
+        name: 'adminIndex',
+        component: AdminIndex,
+      },
+      {
+        path: '/main/adminArticle/:id',
+        name: 'adminArticle',
+        component: AdminArticle,
+        props:true
       },
       {
         path: '/main/forum',

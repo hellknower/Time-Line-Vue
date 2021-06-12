@@ -476,4 +476,34 @@ router.post('/article/discollectArticle',async(req,res)=>{
     }
 });
 
+// 文章 --- 审核
+router.post('/article/reExamined',async(req,res)=>{
+    const {articleId} = req.body;
+
+    try{
+
+        let reExamined = (await articleModel.findOne({articleId})).reExamined;
+        reExamined = true;
+        await articleModel.updateOne({articleId},{reExamined},async(err)=>{
+            if(!err){
+                res.json({
+                    success:true,
+                    message:'审核通过'
+                })
+            }else{
+                res.json({
+                    success:false,
+                    message:'审核失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'审核失败'
+        })
+    }
+});
+
 module.exports = router;

@@ -9,7 +9,7 @@
                     :label="i.typeName"
                     :name='i.typeValue'
                 />
-                <ArticleList v-for="articleMessage in articleMessages" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
+                <ArticleList v-for="articleMessage in articleMessages" v-show="articleMessage.reExamined" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
             </el-tabs>
             <div @click='toAddConversation' class='forum-add'>
                 <img src="../../assets/添加.png" alt="">
@@ -51,15 +51,6 @@
         },
         components:{ArticleList},
         methods:{
-            buttonClick(item){
-                if(item.isChoose){
-                    item.likeCount -= 1;
-                    item.isChoose = !item.isChoose;
-                }else{
-                    item.likeCount += 1;
-                    item.isChoose = !item.isChoose;
-                }
-            },
             tabClick(val){
                 let value = val.name||val;
                 

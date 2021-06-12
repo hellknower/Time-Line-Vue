@@ -73,6 +73,11 @@ let articleSchema = new Schema({
         required:true,
         default:Date.now()
     },
+    reExamined:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
 });
 
 let articleModel = mongoose.model('article',articleSchema);//创建模型对象
