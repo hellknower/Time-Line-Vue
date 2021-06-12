@@ -4,19 +4,23 @@
         <router-link  class='router-link-active' to='conversation'>聊天室</router-link>
         <router-link class='router-link-active'  to='timeline'>时间线</router-link>
         <el-button type="primary" size="default" @click="logout">登出</el-button>
-        
+        <UserHeadImage :userId="userId"/>
     </div>
 </template>
 
 <script>
+import UserHeadImage from '../UserHeadImage.vue'
+
     export default {
         data(){
             return {
-
+                userId:'',
             }
         },
-        created(){
+        mounted(){
+            this.userId = sessionStorage.getItem('userId');
         },
+        components:{UserHeadImage},
         methods:{
             topMain(){
                 this.$router.push('/main');
