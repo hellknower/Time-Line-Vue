@@ -64,7 +64,14 @@ export default{
             articleMessages:{}
         }
     },
-    mounted(){
+    mounted(){        
+        if(sessionStorage.getItem('userId') === null){
+            this.$message({
+                type:'error',
+                message:'请先登录，谢谢'
+            })
+            this.$router.push('/');
+        }
         this.articleId = this.$route.params.id;
         
         findArticleType({}).then((res)=>{

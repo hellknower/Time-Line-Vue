@@ -62,6 +62,13 @@ export default{
         }
     },
     mounted(){
+        if(sessionStorage.getItem('userId') === null){
+            this.$message({
+                type:'error',
+                message:'请先登录，谢谢'
+            })
+            this.$router.push('/');
+        }
         findArticleType().then((res)=>{
             if(res.success){
                 this.articleKinds = res.returnType;

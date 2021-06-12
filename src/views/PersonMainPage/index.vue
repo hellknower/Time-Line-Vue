@@ -37,6 +37,13 @@ export default{
         }
     },
     mounted(){
+        if(sessionStorage.getItem('userId') === null){
+            this.$message({
+                type:'error',
+                message:'请先登录，谢谢'
+            })
+            this.$router.push('/');
+        }
         this.userId = this.$route.params.id;
         // this.userName = sessionStorage.getItem('userName');
         this.getPersonMainMessage();
