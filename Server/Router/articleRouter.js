@@ -196,7 +196,30 @@ router.post('/article/deleteArticle',async(req,res)=>{
     const { userId,articleId } = req.body;
 
     try{        
-       
+        let likePerson = (await articleModel.findOne({articleId})).articleLikePerson;
+        for(let item of likePerson){
+            let userLike = (await userModel.findOne({userId:item})).userLikes;
+            for(let i of userLike){                
+                if(i === articleId){
+                    let index = userLike.indexOf(i);
+                    userLike.splice(index,1);
+                }
+            }
+            await userModel.updateOne({userId:item},{userLikes:userLike});
+        }
+
+        let collectPerson = (await articleModel.findOne({articleId})).articleCollectPerson;
+        for(let item of collectPerson){
+            let userCollect = (await userModel.findOne({userId:item})).userCollect;
+            for(let i of userCollect){                
+                if(i === articleId){
+                    let index = userCollect.indexOf(i);
+                    userCollect.splice(index,1);
+                }
+            }
+            await userModel.updateOne({userId:item},{userCollect:userCollect});
+        }
+
         await articleModel.deleteOne({articleId},async(err)=>{
             if(!err){
                 let userArticles = (await userOwnArticleModel.findOne({userId})).userArticles;

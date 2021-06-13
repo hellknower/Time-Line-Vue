@@ -78,6 +78,9 @@ let articleSchema = new Schema({
         required:true,
         default:false
     },
+    reExaminedMessage:{
+        type:String,
+    },
 });
 
 let articleModel = mongoose.model('article',articleSchema);//创建模型对象

@@ -23,7 +23,11 @@ import UserHeadImage from '../UserHeadImage.vue'
         components:{UserHeadImage},
         methods:{
             topMain(){
-                this.$router.push('/main');
+                if(sessionStorage.getItem('userName') === 'admin'){
+                    this.$router.push('/main/adminIndex');
+                }else{
+                    this.$router.push('/main');
+                }
             },
             logout(){                
                 this.$router.push('/');

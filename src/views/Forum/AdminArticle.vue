@@ -9,7 +9,12 @@
             </div>
             <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
             <div class="article-read-content" v-html="compileMarkDown(articleMessages.articleContent)"></div>
-            <el-button type="primary" size="default" @click="reExaminedSuccess">审核通过</el-button>
+            <el-button v-show="!showSendButton"  type="primary" size="default" @click="reExaminedSuccess">审核通过</el-button>
+            <el-button type="primary" size="default" @click="reExaminedError">审核不通过</el-button>
+            <el-input v-show="showSendButton" v-model="reExaminedMessage" size="normal"/>
+                <el-button v-show="showSendButton" type="primary" size="default" @click="sendReExaminedMessage">发送不审核信息</el-button>
+                
+            
             
         </div>
     </div>
@@ -28,6 +33,8 @@
                 articleMessages:{},
                 articleCreateDate:'',
                 userId:'',
+                reExaminedMessage:'',
+                showSendButton:false
             }
         },
         mounted(){
@@ -80,6 +87,12 @@
                 }).catch((err)=>{
                     console.log(err)
                 })
+            },
+            reExaminedError(){
+                this.showSendButton = !this.showSendButton;
+            },
+            sendReExaminedMessage(){
+                console.log('a')
             }
         }
     }
