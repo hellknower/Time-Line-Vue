@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {findArticleWithId,reExamined} from '../../api/forum.js'
+    import {findArticleWithId,reExamined,backToUser} from '../../api/forum.js'
     import {findUserIdWithUserName} from '../../api/user.js'
     
     const showdown = require('showdown');
@@ -92,7 +92,22 @@
                 this.showSendButton = !this.showSendButton;
             },
             sendReExaminedMessage(){
-                console.log('a')
+                backToUser({reExaminedMessage:this.reExaminedMessage,articleId:this.$route.params.id}).then((res)=>{
+                    if(res.success){
+                        this.$message({
+                            type:'success',
+                            message:'审核成功'
+                        })
+                        this.$router.push('/main/adminIndex');
+                    }else{                        
+                        this.$message({
+                            type:'error',
+                            message:'审核失败'
+                        })
+                    }
+                }).catch((err)=>{
+                    console.log(err)
+                })
             }
         }
     }

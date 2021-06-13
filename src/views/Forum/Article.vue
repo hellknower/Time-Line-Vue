@@ -77,7 +77,7 @@
                 return converter.makeHtml(value);
             },
             edit(){
-                this.$router.push(`/main/editArticle/${this.articleMessages.articleId}`)
+                this.$router.push(`/main/editArticle/${this.articleMessages.articleId}`);
             },
             deleteButton(commentId,articleId){
                 deleteComment({commentId,articleId}).then((res)=>{

@@ -1,8 +1,6 @@
 <template>
     <div class='head'>
-        <span @click="topMain" class='router-link-active'>首页</span>
-        <router-link  class='router-link-active' to='conversation'>聊天室</router-link>
-        <router-link class='router-link-active'  to='timeline'>时间线</router-link>
+        <span @click="topMain" class='router-link-active' >首页</span>
         <el-button type="primary" size="default" @click="logout">登出</el-button>
         <UserHeadImage :userId="userId"/>
     </div>

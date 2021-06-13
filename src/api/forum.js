@@ -107,3 +107,13 @@ export function reExamined(data){
         data
     });
 }
+
+// 文章 --- 审核未通过
+export function backToUser(data){
+    return request({
+        url:'/article/backToUser',
+        method:'post',
+        data
+    });
+}
+

@@ -499,15 +499,16 @@ router.post('/article/discollectArticle',async(req,res)=>{
     }
 });
 
-// 文章 --- 审核
+// 文章 --- 通过审核
 router.post('/article/reExamined',async(req,res)=>{
     const {articleId} = req.body;
 
     try{
-
-        let reExamined = (await articleModel.findOne({articleId})).reExamined;
-        reExamined = true;
-        await articleModel.updateOne({articleId},{reExamined},async(err)=>{
+        let unreExamined = false;
+        let reExamined = true;
+        let reExaminedMessage = '';
+        
+        await articleModel.updateOne({articleId},{reExamined,unreExamined,reExaminedMessage},async(err)=>{
             if(!err){
                 res.json({
                     success:true,
@@ -528,5 +529,33 @@ router.post('/article/reExamined',async(req,res)=>{
         })
     }
 });
+
+// 文章 --- 未通过审核
+router.post('/article/backToUser',async(req,res)=>{
+    const {reExaminedMessage,articleId} = req.body;
+
+    try{
+        let unreExamined = true;
+        await articleModel.updateOne({articleId},{unreExamined,reExaminedMessage},async(err)=>{
+            if(!err){
+                res.json({
+                    success:true,
+                    message:'审核未通过'
+                })
+            }else{
+                res.json({
+                    success:false,
+                    message:'审核失败'
+                })
+            }
+        });
+    }catch(err){
+        console.log('错误为',err);
+        res.json({
+            success:false,
+            message:'审核失败'
+        })
+    }
+})
 
 module.exports = router;

@@ -73,12 +73,17 @@ let articleSchema = new Schema({
         required:true,
         default:Date.now()
     },
-    reExamined:{
+    reExamined:{            //通过审核的显示
         type:Boolean,
         required:true,
         default:false
     },
-    reExaminedMessage:{
+    unreExamined:{            //没通过审核的显示
+        type:Boolean,
+        required:true,
+        default:false
+    },
+    reExaminedMessage:{     //审核信息
         type:String,
     },
 });

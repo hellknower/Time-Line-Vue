@@ -11,8 +11,16 @@
                 />
                 <ArticleList v-for="articleMessage in articleMessages" v-show="articleMessage.reExamined" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
             </el-tabs>
+            <div  style="width:500px;height:100px;overflow:auto;background:gray;position:absolute;top:50%;right:0;color:white;">
+                <div v-for="i in userOwnArticle" :key="i.articleId" v-show="i.unreExamined" @click="editArticle(i.articleId)">                    
+                    {{i.articleTitle}}
+                    {{i.reExaminedMessage}}
+                </div>
+            </div>
             <div @click='toAddConversation' class='forum-add'>
                 <img src="../../assets/添加.png" alt="">
+                <el-button type="primary" size="default" @click="sort">排序</el-button>
+                
             </div>
         </div>
     </div>
@@ -23,13 +31,16 @@
     import { findArticleType } from '../../api/api.js'
     import ArticleList from '../../components/ArticleList.vue'
     import {findArticleWithType} from '../../api/forum'
+    import {personMain} from '../../api/user'
+    
 
     export default {
         data(){
             return {
                 activeName:'SYPQ',
                 forumTitile:[],
-                articleMessages:[]
+                articleMessages:[],
+                userOwnArticle:[]            
             }
         },
         mounted(){
@@ -47,6 +58,13 @@
                     console.log(res.message);
                 }
             });
+            
+            personMain({userId:sessionStorage.getItem('userId')}).then((res)=>{
+                this.userOwnArticle = res.userOwnArticle;
+            }).catch((err)=>{
+                console.log(err)
+            });
+
             this.tabClick(this.activeName);
         },
         components:{ArticleList},
@@ -68,9 +86,17 @@
                 })
             },
             toAddConversation(){
-                this.$router.push('/main/addArticle')
+                // this.$router.push('/main/addArticle')
             },
-
+            editArticle(articleId){
+                this.$router.push(`/main/editArticle/${articleId}`)
+            },
+            sort(){
+                function sortRule(a,b) {    //喜欢降序
+                    return b.articleLikeCount - a.articleLikeCount; // 如果a>=b，返回自然数，不用交换位置
+                }
+                this.articleMessages.sort(sortRule);
+            }
         }
     }
 </script>
