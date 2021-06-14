@@ -1,8 +1,22 @@
 <template>
     <div class='head'>
-        <span @click="topMain" class='router-link-active' >首页</span>
-        <el-button type="primary" size="default" @click="logout">登出</el-button>
-        <UserHeadImage :userId="userId"/>
+        <div class="head-center">            
+            <span @click="topMain" class='router-link-active' >首页</span>
+            <div class="head-center-main">
+                <el-button type="primary" class="head-center-main-button" size="small" @click="toAddConversation" v-show="show">写文章</el-button>
+                <el-dropdown placement="bottom">
+                    <UserHeadImage :userId="userId"/>
+                    <el-dropdown-menu>
+                        <el-dropdown-item>
+                            <p class="logout" @click="logout">
+                                登出
+                            </p>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+            
+        </div>
     </div>
 </template>
 
@@ -13,10 +27,17 @@ import UserHeadImage from '../UserHeadImage.vue'
         data(){
             return {
                 userId:'',
+                show:true
             }
         },
         mounted(){
             this.userId = sessionStorage.getItem('userId');
+            
+            if(sessionStorage.getItem('userName') === 'admin'){
+                this.show = false;
+            }else{
+                this.show = true;
+            }
         },
         components:{UserHeadImage},
         methods:{
@@ -28,10 +49,15 @@ import UserHeadImage from '../UserHeadImage.vue'
                 }
             },
             logout(){                
+                console.log('a')
                 this.$router.push('/');
                 sessionStorage.removeItem('userId');
                 sessionStorage.removeItem('userName');
-            }
+            },
+            toAddConversation(){
+                this.$router.push('/main/addArticle');
+            },
+
         },
     }
 </script>
@@ -41,15 +67,26 @@ import UserHeadImage from '../UserHeadImage.vue'
         height:60px;
         display:flex;
         justify-content: center;
-        align-items: center;
-        .router-link-active
-            font-size:18px;
-            color:#71777c;
-            text-decoration: none;
-            margin-right:60px;
-            cursor:pointer
-        .router-link-active:last-child
-            margin-right:0px;
-        .router-link-active:hover
-            color:#007fff;
+        .head-center
+            display:flex;
+            align-items: center;
+            justify-content:space-between
+            width:748px
+            .head-center-main
+                display:flex;
+                align-items: center;
+                .head-center-main-button
+                    margin-right:8px
+            .router-link-active
+                font-size:18px;
+                color:#71777c;
+                text-decoration: none;
+                margin-right:60px;
+                cursor:pointer
+            .router-link-active:last-child
+                margin-right:0px;
+            .router-link-active:hover
+                color:#007fff;    
+    .logout
+        margin:0
 </style>

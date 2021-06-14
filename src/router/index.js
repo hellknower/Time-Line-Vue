@@ -16,7 +16,6 @@ import Article from '../views/Forum/Article.vue'
 import EditArticle from '../views/Forum/EditArticle.vue'
 
 import Conversation from '../views/Conversation'
-import TimeLine from '../views/TimeLine'
 
 import personMainPage from '../views/PersonMainPage'
 
@@ -122,11 +121,6 @@ const routes = [
     path: '/conversation',
     name: 'conversation',
     component: Conversation
-  },
-  {
-    path: '/timeline',
-    name: 'timeline',
-    component: TimeLine
   },
 ]
 

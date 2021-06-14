@@ -12,7 +12,7 @@
             <el-button v-show="!showSendButton"  type="primary" size="default" @click="reExaminedSuccess">审核通过</el-button>
             <el-button type="primary" size="default" @click="reExaminedError">审核不通过</el-button>
             <el-input v-show="showSendButton" v-model="reExaminedMessage" size="normal"/>
-                <el-button v-show="showSendButton" type="primary" size="default" @click="sendReExaminedMessage">发送不审核信息</el-button>
+            <el-button v-show="showSendButton" type="primary" size="default" @click="sendReExaminedMessage">发送不审核信息</el-button>
                 
             
             
@@ -115,10 +115,10 @@
 
 <style lang="stylus">
 .article-read
+    height:calc(100% - 80px)
     background: rgba(178,186,194,0.15);
     padding-top:20px
     .article-read-main 
-        height:100%
         margin: 0 auto
         width: 640px
         background: white  
@@ -130,7 +130,6 @@
             text-align:left
         .article-read-content
             width: 640px
-            height:100%
             text-align:left
             ul
                 padding-left: 25px

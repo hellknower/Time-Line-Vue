@@ -1,6 +1,7 @@
 <template>
     <div class='forumTop'>
         <div class='forum-all'>
+            <a id="one" href="#"></a>
             <el-tabs class='forum-tabs' type='card' v-model="activeName" @tab-click="tabClick">
                 <!-- <keep-alive> -->
                 <el-tab-pane 
@@ -9,18 +10,27 @@
                     :label="i.typeName"
                     :name='i.typeValue'
                 />
-                <ArticleList v-for="articleMessage in articleMessages" v-show="articleMessage.reExamined" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
+                <el-button type="primary" size="small" class="like-sort-button" @click="sortLike">喜欢排序</el-button>
+                <el-button type="primary" size="small" class="collect-sort-button" @click="sortCollect">收藏排序</el-button>
+                <el-button type="text" @click="dialogVisible = true">查看未通过审核的文章</el-button>
+                <div class="article-list">
+                    <ArticleList v-for="articleMessage in articleMessages" v-show="articleMessage.reExamined" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
+                </div>                    
             </el-tabs>
-            <div  style="width:500px;height:100px;overflow:auto;background:gray;position:absolute;top:50%;right:0;color:white;">
-                <div v-for="i in userOwnArticle" :key="i.articleId" v-show="i.unreExamined" @click="editArticle(i.articleId)">                    
-                    {{i.articleTitle}}
-                    {{i.reExaminedMessage}}
-                </div>
-            </div>
-            <div @click='toAddConversation' class='forum-add'>
-                <img src="../../assets/添加.png" alt="">
-                <el-button type="primary" size="default" @click="sort">排序</el-button>
-                
+            <el-dialog
+                title="提示"
+                :visible.sync="dialogVisible"
+                width="30%"
+                :before-close="handleClose">
+                    <div class="" v-for="i in userOwnArticle" :key="i.articleId" v-show="i.unreExamined" @click="editArticle(i.articleId)">                    
+                        <p>{{i.articleTitle}}</p>
+                        <p>问题为：{{i.reExaminedMessage}}</p> 
+                    </div>
+            </el-dialog>
+            <div class='forum-add'>
+                <a href="#one">
+                    <img src="../../assets/top.png" alt="">
+                </a>                
             </div>
         </div>
     </div>
@@ -40,7 +50,8 @@
                 activeName:'SYPQ',
                 forumTitile:[],
                 articleMessages:[],
-                userOwnArticle:[]            
+                userOwnArticle:[],    
+                dialogVisible: false      
             }
         },
         mounted(){
@@ -85,18 +96,28 @@
                     console.log('错误为'+err)
                 })
             },
-            toAddConversation(){
-                // this.$router.push('/main/addArticle')
-            },
             editArticle(articleId){
                 this.$router.push(`/main/editArticle/${articleId}`)
             },
-            sort(){
+            sortLike(){
                 function sortRule(a,b) {    //喜欢降序
                     return b.articleLikeCount - a.articleLikeCount; // 如果a>=b，返回自然数，不用交换位置
                 }
                 this.articleMessages.sort(sortRule);
-            }
+            },
+            sortCollect(){
+                function sortRule(a,b) {    //喜欢降序
+                    return b.articleCollectCount - a.articleCollectCount; // 如果a>=b，返回自然数，不用交换位置
+                }
+                this.articleMessages.sort(sortRule);
+            },
+            handleClose() {
+                this.$confirm('确认关闭？').then(()=>{
+                    this.dialogVisible = false;
+                }).catch(()=>{
+                    this.dialogVisible = true;
+                })
+            },
         }
     }
 </script>
@@ -105,11 +126,25 @@
     .forumTop
         background:rgba(178,186,194,.15);
         padding-top:20px;
+        height:calc(100% - 80px);
+        .forum-all::-webkit-scrollbar
+            display: none
         .forum-all
             background:white;
             width:748px;
-            height:100%;
+            height:100%
             margin:0 auto;
+            overflow:auto
+            .like-sort-button
+                position:absolute
+                left:10px
+                top:4px
+            .collect-sort-button
+                position:absolute
+                left:100px
+                top:4px
+            .article-list
+                margin-top: 0px
             .forum-add
                 position:fixed;
                 top:90%;
@@ -123,4 +158,23 @@
                 background-color:rgb(255, 255, 255)!important;
             .el-button--default
                 margin-left:0!important;
+            .el-dialog
+                .el-dialog__header
+                    padding-bottom:8px
+                .el-dialog__body::-webkit-scrollbar
+                    display:none
+                .el-dialog__body
+                    height:350px
+                    overflow :auto
+                    padding:0px 20px 8px 20px
+                    margin:0
+                    div
+                        border-top:1px solid rgba(178,186,194,.5);                        
+                        p:first-child
+                            color:black
+                            font-size:18px
+                        p
+                            width:100%
+                            margin:8px 0
+                            text-align :left
 </style>

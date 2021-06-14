@@ -2,16 +2,20 @@
     <div class="article-read">
         <div class="article-read-main">
             <div class="article-read-main-userMessage">
-                <UserHeadImage :userId="userId"/>
-                <div>
-                    <p>{{articleMessages.ownUserName}}</p>
-                    <p><span>{{articleCreateDate}}</span></p>
+                <UserHeadImage class="user-image" :userId="userId"/>
+                <div class="user-message">
+                    <p>用户名：{{articleMessages.ownUserName}}</p>
+                    <p>
+                        <span>{{articleCreateDate}}发布
+                        <el-button v-show="showEdit" @click="edit" type="text">编辑</el-button>
+                        </span>
+                    </p>
                 </div>
-                <el-button v-show="showEdit" @click="edit">编辑</el-button>
             </div>
             <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
             <div class="article-read-content" v-html="compileMarkDown(articleMessages.articleContent)"></div>
             <div class="write-comment">
+                <h2 class="write-comment-title">评论</h2>
                 <el-input v-model="commentContent" class="write-comment-input" placeholder="输入评论..." clearable></el-input>
                 <el-button v-show="sendButton" type="primary" class="write-comment-sendButton" @click="sendCommentButton">评论</el-button>
             </div>
@@ -100,15 +104,23 @@
                 this.sendButton = false;
             },
             sendCommentButton(){
-                const userId = sessionStorage.getItem('userId');
-                const userName = sessionStorage.getItem('userName');
-                const commentContent = this.commentContent;
+                if(this.commentContent === ""){
+                    this.$message({
+                        type:"error",
+                        message:"评论不能为空"
+                    })
+                }else{
+                    const userId = sessionStorage.getItem('userId');
+                    const userName = sessionStorage.getItem('userName');
+                    const commentContent = this.commentContent;
 
-                sendComment({articleId:this.articleMessages.articleId,userId,userName,articleCommentContent:commentContent}).then((res)=>{
-                    this.articleMessages = res.articles;
-                }).catch((err)=>{
-                    console.log(`错误为${err}`)
-                })
+                    sendComment({articleId:this.articleMessages.articleId,userId,userName,articleCommentContent:commentContent}).then((res)=>{
+                        this.articleMessages = res.articles;
+                        this.commentContent = "";
+                    }).catch((err)=>{
+                        console.log(`错误为${err}`)
+                    })
+                }
             }
         }
     }
@@ -117,21 +129,34 @@
 <style lang="stylus">
 .article-read
     background: rgba(178,186,194,0.15);
-    padding-top:20px
+    padding top 20px
+    .article-read-main::-webkit-scrollbar
+        display: none
     .article-read-main 
+        overflow :auto
         height:100%
         margin: 0 auto
-        width: 640px
+        width: 700px
         background: white  
         padding: 0 20px
         .article-read-main-userMessage
             display:flex
+            align-items :center
             text-align:left
+            .user-image
+                margin-right:8px
+            .user-message
+                margin:0
+                p:first-child
+                    margin:0
+                    margin-top:20px
+                    margin-bottom:8px
+                p:last-child
+                    margin:0
         .article-read-title
             text-align:left
         .article-read-content
-            width: 640px
-            height:100%
+            width: 700px
             text-align:left
             ul
                 padding-left: 25px
@@ -141,9 +166,13 @@
         .write-comment
             height: 80px
             margin-top: 60px
-            padding: 30px 30px 10px 30px
+            margin-bottom: 50px
+            padding: 20px 30px 10px 30px
             border-top: 1px solid #e5e6eb
-            text-align: right
+            text-align: left
+            .write-comment-title
+                margin:0
+                margin-bottom:8px
             .write-comment-input
                 margin-bottom: 8px
             .write-comment-sendButton

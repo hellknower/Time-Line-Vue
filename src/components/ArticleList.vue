@@ -64,7 +64,7 @@ export default({
 
 <style lang="stylus">
 .forum-one
-    padding:18px 24px;
+    padding:8px 24px;
     border-top:1px solid rgba(178,186,194,.15);
     width:700px;
     height:120px;
@@ -90,7 +90,5 @@ export default({
             .isClick
                 color: #409EFF!important;
                 border-color: #c6e2ff!important;
-                background-color: #ecf5ff!important;          
-.forum-one:nth-child(2)
-    border-top:0px;
+                background-color: #ecf5ff!important;
 </style>

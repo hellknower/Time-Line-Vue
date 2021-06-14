@@ -13,9 +13,8 @@
                     type="primary"
                     size="normal">
                     <el-card>
-                        {{item.articleTitle}}
-                        <el-button v-show="showButton" type="primary" size="default" @click="deleteButton(item.articleId)">删除</el-button>
-                        
+                        <p class="person-main-center-p">{{item.articleTitle}}</p>
+                        <el-button v-show="showButton" type="primary" size="small" @click="deleteButton(item.articleId)">删除</el-button>
                     </el-card>                        
                 </el-timeline-item>
             </el-timeline>
@@ -81,11 +80,12 @@ export default{
 
 <style lang="stylus">
 .person-main
+    height:calc(100% - 80px)
     background: rgba(178,186,194,0.15);
     padding-top:20px
-    height: 100%
+    overflow :auto
     .person-main-center
-        width: 640px
+        width: 748px
         margin: 0 auto
         display:flex
         background-color: white
@@ -97,4 +97,6 @@ export default{
                 border:3px solid rgb(178,186,194)
         .person-main-center-timeLine
             margin-top: 50px
+            .person-main-center-p
+                width:400px
 </style>
