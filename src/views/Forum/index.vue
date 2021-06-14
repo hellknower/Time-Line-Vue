@@ -12,7 +12,17 @@
                 />
                 <el-button type="primary" size="small" class="like-sort-button" @click="sortLike">喜欢排序</el-button>
                 <el-button type="primary" size="small" class="collect-sort-button" @click="sortCollect">收藏排序</el-button>
-                <el-button type="text" @click="dialogVisible = true">查看未通过审核的文章</el-button>
+                <el-button type="text" class="check-dialogVisible-button" @click="dialogVisible = true">查看未通过审核的文章</el-button>
+                <el-dropdown trigger="click" placement="bottom-start">
+                    <el-input v-model="searchMessage" size="small" @input="searchArticle" placeholder="请输入要查询的数据..."/>                        
+                    <el-dropdown-menu>
+                        <el-dropdown-item v-for="i in searchResult" :key="i.item.articleId" v-show="!i.item.unreExamined">
+                            <div @click="toArticle(i.item.articleId)">
+                                {{i.item.articleTitle}} 
+                            </div>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
                 <div class="article-list">
                     <ArticleList v-for="articleMessage in articleMessages" v-show="articleMessage.reExamined" :key="articleMessage.articleId" :articleMessage="articleMessage"/>
                 </div>                    
@@ -42,6 +52,7 @@
     import ArticleList from '../../components/ArticleList.vue'
     import {findArticleWithType} from '../../api/forum'
     import {personMain} from '../../api/user'
+    import Fuse from 'fuse.js'
     
 
     export default {
@@ -51,7 +62,13 @@
                 forumTitile:[],
                 articleMessages:[],
                 userOwnArticle:[],    
-                dialogVisible: false      
+                dialogVisible: false,
+                searchMessage:'',
+                options :{
+                    includeScore: true,
+                    keys:['articleTitle']
+                },
+                searchResult:[]
             }
         },
         mounted(){
@@ -118,6 +135,13 @@
                     this.dialogVisible = true;
                 })
             },
+            searchArticle(){
+                const fuse = new Fuse(this.articleMessages,this.options);
+                this.searchResult = fuse.search(this.searchMessage);
+            },
+            toArticle(id){
+                this.$router.push(`/main/article/${id}`);
+            }
         }
     }
 </script>
@@ -143,6 +167,8 @@
                 position:absolute
                 left:100px
                 top:4px
+            .check-dialogVisible-button
+                margin-right:20px
             .article-list
                 margin-top: 0px
             .forum-add
