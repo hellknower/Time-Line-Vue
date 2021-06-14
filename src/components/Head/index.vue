@@ -1,7 +1,10 @@
 <template>
     <div class='head'>
-        <div class="head-center">            
-            <span @click="topMain" class='router-link-active' >首页</span>
+        <div class="head-center">
+            <div>
+                <span @click="topMain" class='router-link-active' >首页</span>
+                <span @click="topCollect" class='router-link-active' v-show="show">个人收藏</span>
+            </div>
             <div class="head-center-main">
                 <el-button type="primary" class="head-center-main-button" size="small" @click="toAddConversation" v-show="show">写文章</el-button>
                 <el-dropdown placement="bottom">
@@ -48,8 +51,12 @@ import UserHeadImage from '../UserHeadImage.vue'
                     this.$router.push('/main');
                 }
             },
-            logout(){                
-                console.log('a')
+            topCollect(){
+                if(sessionStorage.getItem('userName') !== 'admin'){
+                    this.$router.push(`/main/personCollectPage/${sessionStorage.getItem('userId')}`);
+                }
+            },
+            logout(){
                 this.$router.push('/');
                 sessionStorage.removeItem('userId');
                 sessionStorage.removeItem('userName');

@@ -18,6 +18,7 @@ import EditArticle from '../views/Forum/EditArticle.vue'
 import Conversation from '../views/Conversation'
 
 import personMainPage from '../views/PersonMainPage'
+import PersonCollectPage from '../views/PersonCollectPage'
 
 
 Vue.use(VueRouter);
@@ -102,6 +103,12 @@ const routes = [
         path:'/main/personMainPage/:id',
         name:'personMainPage',
         component:personMainPage,
+        props:true
+      },
+      {
+        path:'/main/personCollectPage/:id',
+        name:'personCollectPage',
+        component:PersonCollectPage,
         props:true
       },
     ]

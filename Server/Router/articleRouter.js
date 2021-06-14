@@ -556,6 +556,6 @@ router.post('/article/backToUser',async(req,res)=>{
             message:'审核失败'
         })
     }
-})
+});
 
 module.exports = router;
