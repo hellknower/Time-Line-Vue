@@ -12,6 +12,7 @@
                     </p>
                 </div>
             </div>
+            <LikeList :articleId="articleMessages.articleId"/>
             <h1 class="article-read-title">{{articleMessages.articleTitle}}</h1>
             <div class="article-read-content" v-html="compileMarkDown(articleMessages.articleContent)"></div>
             <div class="write-comment">
@@ -29,6 +30,7 @@
     import {findUserIdWithUserName} from '../../api/user.js'
     import Comments from '../../components/Comments.vue'
     import UserHeadImage from '../../components/UserHeadImage.vue'
+    import LikeList from '../../components/LikeList.vue'
     
     const showdown = require('showdown');
     const converter = new showdown.Converter();
@@ -75,7 +77,7 @@
                 console.log('错误为'+err)
             })
         },
-        components:{Comments,UserHeadImage},
+        components:{Comments,UserHeadImage,LikeList},
         methods:{
             compileMarkDown(value){
                 return converter.makeHtml(value);

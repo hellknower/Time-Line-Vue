@@ -18,7 +18,7 @@ router.post('/article/findArticleWithType',async(req,res)=>{
         // //根据获取到的文章ID，类型查找对应的用户名以及类型名，并返回给前端
         for(item of articles){                
             const type = (await articleType.find({typeValue:item.articleType}))[0];
-            item.articleType = type.typeName;                
+            item.articleType = type.typeName;             
         }
         
         res.send({
@@ -44,9 +44,9 @@ router.post('/article/findArticleWithID',async(req,res)=>{
         let articles = await articleModel.find({articleId});
 
         // //根据获取到的文章ID，类型查找对应的用户名以及类型名，并返回给前端
-        for(item of articles){                
+        for(item of articles){
             const type = (await articleType.find({typeValue:item.articleType}))[0];
-            item.articleType = type.typeName;                
+            item.articleType = type.typeName;
         }
         
         res.send({

@@ -21,6 +21,7 @@ export default {
             userId:''
         }
     },
+    props:['articleId'],
     mounted(){
         this.userId = sessionStorage.getItem('userId');
         let userId = this.userId;
@@ -29,12 +30,12 @@ export default {
             this.userLikes = res.userLikes;
             this.userCollect = res.userCollect;
             for(let item of this.userLikes){
-                if(item === this.articleId){
+                if(item === this.articleId || item === this.$route.params.id){
                     this.showLikeButton = false;
                 }
             }
             for(let item of this.userCollect){
-                if(item === this.articleId){
+                if(item === this.articleId || item === this.$route.params.id){
                     this.showCollectButton = false;
                 }
             }
@@ -42,7 +43,6 @@ export default {
             console.log(err)
         })
     },
-    props:['articleId'],
     methods:{
         likeButton(){
             let articleId = this.articleId;
