@@ -22,6 +22,8 @@
                     v-model="password" 
                     clearable 
                     placeholder="请输入密码"
+                    type="password"
+                    show-password
                     @blur="checkPassword"
                     @keydown.enter.native="regist"/>
             </div>
@@ -33,7 +35,9 @@
                 <el-input 
                     v-model="rePassword" 
                     clearable 
+                    type="password"
                     placeholder="请再次输入密码"
+                    show-password
                     @blur="checkRePassword"
                     @keydown.enter.native="regist"/>
             </div>

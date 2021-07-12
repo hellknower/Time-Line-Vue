@@ -92,7 +92,6 @@
             }).catch((err)=>{
                 console.log(err)
             });
-
             this.tabClick(this.activeName);
         },
         components:{ArticleList},
@@ -103,6 +102,15 @@
                 findArticleWithType({typeValue:value}).then((res)=>{
                     if(res.success){
                         this.articleMessages = res.articles;
+                        for(let i of this.articleMessages){
+                            const rex = new RegExp(/^[A-Z]{4}$/);
+                            if(rex.test(i.articleType)){
+                                i.articleType = '前端'
+                            }
+                            // if(i){
+                            //     i.ty = '前端'
+                            // }
+                        }
                     }else{
                         this.$message({
                             type:'error',
